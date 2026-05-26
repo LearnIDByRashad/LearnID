@@ -16,7 +16,6 @@
       background: linear-gradient(135deg, #0a0f1a 0%, #0a0a0f 100%);
       color: #e0e0e0;
       min-height: 100vh;
-      overflow-x: hidden;
     }
     
     /* LOADING SCREEN */
@@ -26,16 +25,15 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: #0a0a0f;
+      background: #0a0f1a;
       display: flex;
       justify-content: center;
       align-items: center;
       flex-direction: column;
-      z-index: 9999;
-      transition: opacity 0.5s ease;
+      z-index: 2000;
     }
     
-    .loading-screen .spinner {
+    .loading-spinner {
       width: 60px;
       height: 60px;
       border: 4px solid #2a3040;
@@ -50,16 +48,16 @@
       100% { transform: rotate(360deg); }
     }
     
-    .loading-screen p {
-      font-size: 1rem;
-      color: #ffaa44;
+    .loading-text {
+      font-size: 1.2rem;
       letter-spacing: 2px;
+      color: #ffaa44;
     }
     
-    .loading-screen .credit-load {
-      margin-top: 30px;
-      font-size: 0.7rem;
-      color: #555;
+    .loading-sub {
+      font-size: 0.8rem;
+      color: #888;
+      margin-top: 10px;
     }
     
     /* Login Page */
@@ -69,6 +67,8 @@
       justify-content: center;
       align-items: center;
       padding: 20px;
+      opacity: 0;
+      transition: opacity 0.5s;
     }
     
     .login-card {
@@ -167,13 +167,6 @@
       border: none;
       cursor: pointer;
       font-size: 1rem;
-    }
-    
-    .credit-footer {
-      text-align: center;
-      margin-top: 30px;
-      font-size: 0.7rem;
-      color: #555;
     }
     
     /* Container */
@@ -332,16 +325,6 @@
       gap: 10px;
     }
     
-    .kunci-badge {
-      background: #ffaa4422;
-      border: 1px solid #ffaa44;
-      border-radius: 20px;
-      padding: 2px 10px;
-      font-size: 11px;
-      display: inline-block;
-      margin-top: 8px;
-    }
-    
     .result-card {
       background: #11151f;
       border-radius: 24px;
@@ -359,8 +342,22 @@
       display: none;
     }
     
+    /* Credit */
+    .credit {
+      position: fixed;
+      bottom: 10px;
+      right: 15px;
+      font-size: 0.7rem;
+      color: #666;
+      z-index: 100;
+      background: rgba(0,0,0,0.5);
+      padding: 5px 12px;
+      border-radius: 20px;
+    }
+    
     @media (max-width: 600px) {
       .role-buttons { flex-direction: column; }
+      .timer { font-size: 1.8rem; }
     }
   </style>
 </head>
@@ -368,42 +365,38 @@
 
 <!-- LOADING SCREEN -->
 <div id="loadingScreen" class="loading-screen">
-  <div class="spinner"></div>
-  <p>⚡ SEDANG LOADING ⚡</p>
-  <p style="font-size: 0.7rem; margin-top: 5px;">harap tunggu sebentar...</p>
-  <div class="credit-load">© 2024 | Rashad Dev</div>
+  <div class="loading-spinner"></div>
+  <div class="loading-text">⚡ SEDANG LOADING ⚡</div>
+  <div class="loading-sub">harap tunggu sebentar...</div>
 </div>
 
-<div id="app" style="display: none;">
+<!-- CREDIT -->
+<div class="credit" id="creditText">© 2026 | Made by Rashad</div>
+
+<div id="app">
   <!-- LOGIN PAGE -->
-  <div id="loginPage">
-    <div class="login-page">
-      <div class="login-card">
-        <h1>📚 UJIAN ONLINE SMK</h1>
-        <div class="sub">Pilih Role Login</div>
-        
-        <div class="role-buttons">
-          <div class="role-btn learnid" id="learnBtn">
-            <i>🎓</i>
-            <div>LearnID</div>
-            <div style="font-size: 10px; color: #888;">Siswa</div>
-          </div>
-          <div class="role-btn teachid" id="teachBtn">
-            <i>👨‍🏫</i>
-            <div>TeachID</div>
-            <div style="font-size: 10px; color: #888;">Guru</div>
-          </div>
+  <div id="loginPage" class="login-page" style="opacity: 0;">
+    <div class="login-card">
+      <h1>📚 UJIAN ONLINE SMK</h1>
+      <div class="sub">Pilih Role Login</div>
+      
+      <div class="role-buttons">
+        <div class="role-btn learnid" id="learnBtn">
+          <i>🎓</i>
+          <div>LearnID</div>
+          <div style="font-size: 10px; color: #888;">Siswa</div>
         </div>
-        
-        <div id="loginInput" style="display: none; margin-top: 20px;">
-          <input type="text" id="namaInput" placeholder="Masukkan Nama Lengkap">
-          <input type="text" id="kelasInput" placeholder="Kelas">
-          <button id="submitLoginBtn" class="login-btn">Login</button>
+        <div class="role-btn teachid" id="teachBtn">
+          <i>👨‍🏫</i>
+          <div>TeachID</div>
+          <div style="font-size: 10px; color: #888;">Guru</div>
         </div>
-        
-        <div class="credit-footer">
-          <i class="fas fa-code"></i> Dibuat oleh <strong>Rashad</strong> | SMK Developer
-        </div>
+      </div>
+      
+      <div id="loginInput" style="display: none; margin-top: 20px;">
+        <input type="text" id="namaInput" placeholder="Masukkan Nama Lengkap">
+        <input type="text" id="kelasInput" placeholder="Kelas">
+        <button id="submitLoginBtn" class="login-btn">Login</button>
       </div>
     </div>
   </div>
@@ -415,24 +408,36 @@
 <script>
   // ========== DATA SOAL & KUNCI JAWABAN ==========
   let soalData = [
-    { text: "Apa kepanjangan dari SMK?", options: ["Sekolah Menengah Kejuruan", "Sekolah Menengah Karir", "Sekolah Menengah Kreatif", "Sekolah Menengah Kompeten"], kunci: 0 },
-    { text: "Berapa nilai minimal KKM umumnya?", options: ["60", "65", "70", "75"], kunci: 0 },
-    { text: "Apa itu Ujian Sekolah?", options: ["Ujian yang diselenggarakan oleh sekolah", "Ujian nasional", "Ujian masuk PTN", "Ujian praktek saja"], kunci: 0 },
-    { text: "Siapa yang bertanggung jawab atas ujian sekolah?", options: ["Kepala Sekolah", "Guru", "Dinas Pendidikan", "Semua benar"], kunci: 3 },
-    { text: "Apa tujuan utama ujian sekolah?", options: ["Mengukur kompetensi siswa", "Membuat siswa stres", "Mengisi waktu", "Menaikkan gaji guru"], kunci: 0 }
+    { text: "Apa kepanjangan dari SMK?", options: ["Sekolah Menengah Kejuruan", "Sekolah Menengah Karir", "Sekolah Menengah Kreatif", "Sekolah Menengah Kompeten"] },
+    { text: "Berapa nilai minimal KKM umumnya?", options: ["60", "65", "70", "75"] },
+    { text: "Apa itu Ujian Sekolah?", options: ["Ujian yang diselenggarakan oleh sekolah", "Ujian nasional", "Ujian masuk PTN", "Ujian praktek saja"] },
+    { text: "Siapa yang bertanggung jawab atas ujian sekolah?", options: ["Kepala Sekolah", "Guru", "Dinas Pendidikan", "Semua benar"] },
+    { text: "Apa tujuan utama ujian sekolah?", options: ["Mengukur kompetensi siswa", "Membuat siswa stres", "Mengisi waktu", "Menaikkan gaji guru"] }
   ];
+  
+  // Kunci jawaban (index 0 = A, 1 = B, 2 = C, 3 = D)
+  let kunciJawaban = [0, 0, 0, 0, 0]; // default semua A
   
   let selectedRole = null;
   
-  // ========== HILANGKAN LOADING ==========
-  setTimeout(() => {
+  // ========== LOADING SCREEN DURASI 3-4 DETIK ==========
+  window.addEventListener('load', function() {
     const loadingScreen = document.getElementById('loadingScreen');
-    loadingScreen.style.opacity = '0';
-    setTimeout(() => {
-      loadingScreen.style.display = 'none';
-      document.getElementById('app').style.display = 'block';
-    }, 500);
-  }, 2000);
+    const loginPage = document.getElementById('loginPage');
+    const credit = document.getElementById('creditText');
+    
+    // Random durasi antara 3000 - 4000 ms
+    const duration = Math.floor(Math.random() * (4000 - 3000 + 1) + 3000);
+    
+    setTimeout(function() {
+      loadingScreen.style.opacity = '0';
+      setTimeout(function() {
+        loadingScreen.style.display = 'none';
+        loginPage.style.opacity = '1';
+        credit.style.opacity = '1';
+      }, 500);
+    }, duration);
+  });
   
   // ========== DOM Elements ==========
   const learnBtn = document.getElementById('learnBtn');
@@ -526,7 +531,6 @@
         </div>
         <div class="progress" id="progressText"></div>
         <button id="submitUjianBtn" class="danger" style="margin-top: 20px;">📤 SUBMIT UJIAN</button>
-        <div class="credit-footer" style="margin-top: 20px;">© Dibuat oleh Rashad | SMK Dev</div>
       </div>
     `;
     
@@ -588,34 +592,30 @@
         const timerDisplay = document.getElementById('timerDisplay');
         if (timerDisplay) timerDisplay.innerText = `${menit.toString().padStart(2, '0')}:${detik.toString().padStart(2, '0')}`;
         if (waktu === 0) {
-          alert("WAKTU HABIS! Ujian akan disubmit otomatis.");
-          submitExamFromTimer();
+          alert("⏰ WAKTU HABIS! Ujian akan disubmit otomatis.");
+          submitExam();
         }
       }
     }, 1000);
   }
   
-  function submitExamFromTimer() {
-    if (ujianSelesai) return;
-    const nama = document.querySelector('.info-siswa') ? ... : 'Siswa';
-    submitExam('Siswa', 'Kelas');
-  }
-  
   function submitExam(nama, kelas) {
     const belumDijawab = jawaban.filter(j => j === null).length;
     if (belumDijawab > 0) {
-      alert(`Masih ada ${belumDijawab} soal yang belum dijawab!`);
+      alert(`⚠️ Masih ada ${belumDijawab} soal yang belum dijawab!`);
       return;
     }
     
     ujianSelesai = true;
     clearInterval(timerInterval);
     
-    // Hitung skor berdasarkan kunci jawaban dari soalData
+    // Hitung skor berdasarkan kunci jawaban
     let score = 0;
-    jawaban.forEach((jawab, idx) => {
-      if (jawab === soalData[idx].kunci) score++;
-    });
+    for (let i = 0; i < jawaban.length; i++) {
+      if (jawaban[i] === kunciJawaban[i]) {
+        score++;
+      }
+    }
     const nilai = Math.round((score / soalData.length) * 100);
     
     document.getElementById('soalContainer').innerHTML = `
@@ -626,12 +626,9 @@
         <p>${nilai >= 75 ? '✅ LULUS' : '❌ TIDAK LULUS'}</p>
       </div>
     `;
-    const navButtons = document.querySelector('.nav-buttons');
-    if (navButtons) navButtons.style.display = 'none';
-    const submitBtn = document.getElementById('submitUjianBtn');
-    if (submitBtn) submitBtn.style.display = 'none';
-    const timerBox = document.querySelector('.timer-box');
-    if (timerBox) timerBox.style.display = 'none';
+    document.querySelector('.nav-buttons').style.display = 'none';
+    document.getElementById('submitUjianBtn').style.display = 'none';
+    document.querySelector('.timer-box').style.display = 'none';
     
     // Kirim ke Telegram
     kirimTelegram(nama, kelas, score, nilai);
@@ -642,6 +639,10 @@
     document.getElementById('loginPage').style.display = 'none';
     const mainApp = document.getElementById('mainApp');
     
+    renderDashboardGuru(mainApp, nama);
+  }
+  
+  function renderDashboardGuru(mainApp, nama) {
     mainApp.innerHTML = `
       <div class="container">
         <div class="dashboard-header">
@@ -654,10 +655,8 @@
         <div style="background: #1a1f2e; border-radius: 16px; padding: 15px; margin-bottom: 20px;">
           <p>👤 Guru: <strong>${nama}</strong></p>
           <p>📋 Total Soal: <strong id="totalSoalCount">${soalData.length}</strong> soal</p>
-          <p style="margin-top: 5px; font-size: 12px; color: #ffaa44;">💡 Tips: Kunci jawaban bisa diubah saat edit soal</p>
         </div>
         <div id="soalListContainer" class="soal-list"></div>
-        <div class="credit-footer" style="margin-top: 30px;">© Dibuat oleh Rashad | SMK Dev</div>
       </div>
     `;
     
@@ -672,40 +671,46 @@
     const container = document.getElementById('soalListContainer');
     if (!container) return;
     
-    const optionLetters = ['A', 'B', 'C', 'D'];
-    
-    container.innerHTML = soalData.map((soal, idx) => `
-      <div class="soal-item">
-        <div class="soal-item-header">
-          <span style="background: #ffaa44; color: #1a1a1a; padding: 2px 10px; border-radius: 20px;">Soal ${idx + 1}</span>
-          <div>
-            <button onclick="editSoalFunc(${idx})" style="background: #44aaff; border: none; padding: 5px 12px; border-radius: 20px; cursor: pointer;">✏️ Edit</button>
-            <button onclick="hapusSoalFunc(${idx})" style="background: #dc2626; border: none; padding: 5px 12px; border-radius: 20px; cursor: pointer; margin-left: 5px;">🗑️ Hapus</button>
+    container.innerHTML = soalData.map((soal, idx) => {
+      const kunciHuruf = String.fromCharCode(65 + kunciJawaban[idx]);
+      return `
+        <div class="soal-item">
+          <div class="soal-item-header">
+            <span style="background: #ffaa44; color: #1a1a1a; padding: 2px 10px; border-radius: 20px;">Soal ${idx + 1}</span>
+            <div>
+              <button onclick="editKunciFunc(${idx})" style="background: #ffaa44; border: none; padding: 5px 12px; border-radius: 20px; cursor: pointer;">🔑 Kunci: ${kunciHuruf}</button>
+              <button onclick="editSoalFunc(${idx})" style="background: #44aaff; border: none; padding: 5px 12px; border-radius: 20px; cursor: pointer;">✏️ Edit</button>
+              <button onclick="hapusSoalFunc(${idx})" style="background: #dc2626; border: none; padding: 5px 12px; border-radius: 20px; cursor: pointer; margin-left: 5px;">🗑️ Hapus</button>
+            </div>
+          </div>
+          <div class="soal-text" style="margin-top: 10px;">📖 ${soal.text}</div>
+          <div style="font-size: 12px; color: #888; margin-top: 10px;">
+            A. ${soal.options[0]}<br>
+            B. ${soal.options[1]}<br>
+            C. ${soal.options[2]}<br>
+            D. ${soal.options[3]}
           </div>
         </div>
-        <div class="soal-text" style="margin-top: 10px;">📖 ${soal.text}</div>
-        <div style="font-size: 12px; color: #888; margin-top: 10px;">
-          A. ${soal.options[0]}<br>
-          B. ${soal.options[1]}<br>
-          C. ${soal.options[2]}<br>
-          D. ${soal.options[3]}
-        </div>
-        <div class="kunci-badge">
-          🔑 Kunci Jawaban: ${optionLetters[soal.kunci]} (${soal.options[soal.kunci]})
-        </div>
-      </div>
-    `).join('');
+      `;
+    }).join('');
     
     const totalSpan = document.getElementById('totalSoalCount');
     if (totalSpan) totalSpan.innerText = soalData.length;
   }
   
-  window.editSoalFunc = function(idx) {
-    const soal = soalData[idx];
-    const optionLetters = ['A', 'B', 'C', 'D'];
-    
-    const newText = prompt("Edit soal:", soal.text);
-    if (newText) soal.text = newText;
-    
-    const newA = prompt("Option A:", soal.options[0]);
-    const newB = pro
+  // Edit kunci jawaban
+  window.editKunciFunc = function(idx) {
+    const pilihan = prompt(`Set kunci jawaban untuk soal ${idx + 1}:\nA (0) | B (1) | C (2) | D (3)`, kunciJawaban[idx]);
+    if (pilihan !== null) {
+      const val = parseInt(pilihan);
+      if (val >= 0 && val <= 3) {
+        kunciJawaban[idx] = val;
+        alert(`✅ Kunci jawaban soal ${idx + 1} diubah menjadi ${String.fromCharCode(65 + val)}`);
+        renderSoalList();
+      } else {
+        alert("Masukkan angka 0-3 (0=A, 1=B, 2=C, 3=D)");
+      }
+    }
+  };
+  
+  window.editSoalFunc = func
