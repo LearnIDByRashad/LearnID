@@ -18,7 +18,6 @@
       min-height: 100vh;
     }
     
-    /* Login Page */
     .login-page {
       min-height: 100vh;
       display: flex;
@@ -46,16 +45,10 @@
       color: transparent;
     }
     
-    .login-card .sub {
-      color: #888;
-      font-size: 0.8rem;
-      margin-bottom: 30px;
-    }
-    
     .role-buttons {
       display: flex;
       gap: 20px;
-      margin-bottom: 30px;
+      margin: 30px 0;
     }
     
     .role-btn {
@@ -65,18 +58,7 @@
       border-radius: 60px;
       padding: 15px;
       cursor: pointer;
-      transition: all 0.2s;
       text-align: center;
-    }
-    
-    .role-btn:hover {
-      border-color: #ffaa44;
-      transform: translateY(-2px);
-    }
-    
-    .role-btn.selected {
-      border-color: #ffaa44;
-      background: #2a3045;
     }
     
     .role-btn i {
@@ -85,16 +67,11 @@
       margin-bottom: 8px;
     }
     
-    .role-btn.learnid i { color: #44aaff; }
-    .role-btn.teachid i { color: #ffaa44; }
+    .learnid i { color: #44aaff; }
+    .teachid i { color: #ffaa44; }
     
     .login-input {
       margin-top: 20px;
-      display: none;
-    }
-    
-    .login-input.show {
-      display: block;
     }
     
     .login-input input {
@@ -109,10 +86,6 @@
       outline: none;
     }
     
-    .login-input input:focus {
-      border-color: #ffaa44;
-    }
-    
     .login-btn {
       width: 100%;
       padding: 14px;
@@ -125,13 +98,10 @@
       font-size: 1rem;
     }
     
-    /* Container */
     .container {
       max-width: 800px;
       margin: 0 auto;
       padding: 20px;
-      min-height: 100vh;
-      position: relative;
     }
     
     .lockdown-bar {
@@ -140,14 +110,13 @@
       text-align: center;
       padding: 8px;
       font-size: 12px;
-      font-weight: bold;
     }
     
     .timer-box {
       background: #1a1f2e;
       border: 2px solid #ff4444;
       border-radius: 60px;
-      padding: 12px 20px;
+      padding: 12px;
       text-align: center;
       margin-bottom: 20px;
     }
@@ -155,7 +124,6 @@
     .timer {
       font-size: 2.5rem;
       font-weight: bold;
-      font-family: monospace;
       color: #ff4444;
     }
     
@@ -170,7 +138,6 @@
     .soal-text {
       font-size: 1rem;
       margin-bottom: 20px;
-      line-height: 1.5;
     }
     
     .options {
@@ -186,19 +153,12 @@
       padding: 12px 18px;
       cursor: pointer;
       display: flex;
-      align-items: center;
       gap: 12px;
     }
     
     .option.selected {
       background: #2a3045;
       border-color: #ffaa44;
-    }
-    
-    .option-letter {
-      font-weight: bold;
-      color: #ffaa44;
-      width: 28px;
     }
     
     .nav-buttons {
@@ -210,57 +170,40 @@
     button {
       background: #2a3040;
       border: none;
-      padding: 12px 20px;
+      padding: 12px;
       border-radius: 50px;
       color: white;
-      font-weight: bold;
       cursor: pointer;
       flex: 1;
     }
     
-    button.primary {
-      background: #ffaa44;
-      color: #1a1a1a;
-    }
-    
-    button.danger {
-      background: #dc2626;
-    }
+    .primary { background: #ffaa44; color: #1a1a1a; }
+    .danger { background: #dc2626; }
     
     .progress {
       text-align: center;
       margin-top: 15px;
-      font-size: 0.75rem;
+      font-size: 12px;
       color: #888;
     }
     
-    /* Dashboard */
     .dashboard-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin-bottom: 20px;
       flex-wrap: wrap;
-      gap: 10px;
     }
     
-    .btn-tambah {
-      background: #ffaa44;
-      color: #1a1a1a;
+    .btn-tambah, .btn-logout {
       padding: 10px 20px;
       border-radius: 60px;
       border: none;
       cursor: pointer;
     }
     
-    .btn-logout {
-      background: #dc2626;
-      color: white;
-      padding: 10px 20px;
-      border-radius: 60px;
-      border: none;
-      cursor: pointer;
-    }
+    .btn-tambah { background: #ffaa44; color: #1a1a1a; }
+    .btn-logout { background: #dc2626; color: white; }
     
     .soal-list {
       display: flex;
@@ -280,37 +223,14 @@
       justify-content: space-between;
       margin-bottom: 10px;
       flex-wrap: wrap;
-      gap: 10px;
     }
     
-    .result-card {
-      background: #11151f;
-      border-radius: 24px;
-      padding: 30px;
-      text-align: center;
-    }
-    
-    .nilai-besar {
-      font-size: 3rem;
-      font-weight: bold;
-      margin: 20px 0;
-    }
-    
-    .hidden {
-      display: none;
-    }
-    
-    /* Credit */
     .credit {
-      position: fixed;
-      bottom: 10px;
-      right: 15px;
-      font-size: 0.7rem;
+      text-align: center;
+      margin-top: 30px;
+      font-size: 12px;
       color: #666;
-      z-index: 100;
-      background: rgba(0,0,0,0.5);
-      padding: 5px 12px;
-      border-radius: 20px;
+      padding: 10px;
     }
     
     @media (max-width: 600px) {
@@ -322,127 +242,103 @@
 <body>
 
 <div id="app">
-  <!-- LOGIN PAGE -->
-  <div id="loginPage" class="login-page">
-    <div class="login-card">
-      <h1>📚 UJIAN ONLINE SMK</h1>
-      <div class="sub">Pilih Role Login</div>
-      
-      <div class="role-buttons">
-        <div class="role-btn learnid" id="learnBtn">
-          <i>🎓</i>
-          <div>LearnID</div>
-          <div style="font-size: 10px; color: #888;">Siswa</div>
+  <div id="loginPage">
+    <div class="login-page">
+      <div class="login-card">
+        <h1>📚 UJIAN ONLINE SMK</h1>
+        <div class="role-buttons">
+          <div class="role-btn learnid" onclick="pilihRole('learn')">
+            <i>🎓</i>
+            <div>LearnID</div>
+            <small>Siswa</small>
+          </div>
+          <div class="role-btn teachid" onclick="pilihRole('teach')">
+            <i>👨‍🏫</i>
+            <div>TeachID</div>
+            <small>Guru</small>
+          </div>
         </div>
-        <div class="role-btn teachid" id="teachBtn">
-          <i>👨‍🏫</i>
-          <div>TeachID</div>
-          <div style="font-size: 10px; color: #888;">Guru</div>
+        <div id="loginInputArea" style="display: none;">
+          <input type="text" id="namaUser" placeholder="Masukkan Nama Lengkap">
+          <input type="text" id="kelasUser" placeholder="Kelas">
+          <button class="login-btn" onclick="prosesLogin()">Login</button>
         </div>
-      </div>
-      
-      <div id="loginInput" style="display: none; margin-top: 20px;">
-        <input type="text" id="namaInput" placeholder="Masukkan Nama Lengkap">
-        <input type="text" id="kelasInput" placeholder="Kelas">
-        <button id="submitLoginBtn" class="login-btn">Login</button>
       </div>
     </div>
   </div>
   
-  <!-- MAIN APP -->
-  <div id="mainApp" style="display: none;"></div>
+  <div id="mainArea" style="display: none;"></div>
 </div>
 
 <script>
-  // ========== DATA SOAL & KUNCI JAWABAN ==========
+  // DATA SOAL
   let soalData = [
     { text: "Apa kepanjangan dari SMK?", options: ["Sekolah Menengah Kejuruan", "Sekolah Menengah Karir", "Sekolah Menengah Kreatif", "Sekolah Menengah Kompeten"] },
     { text: "Berapa nilai minimal KKM umumnya?", options: ["60", "65", "70", "75"] },
-    { text: "Apa itu Ujian Sekolah?", options: ["Ujian yang diselenggarakan oleh sekolah", "Ujian nasional", "Ujian masuk PTN", "Ujian praktek saja"] },
+    { text: "Apa itu Ujian Sekolah?", options: ["Ujian sekolah", "Ujian nasional", "Ujian masuk PTN", "Ujian praktek"] },
     { text: "Siapa yang bertanggung jawab atas ujian sekolah?", options: ["Kepala Sekolah", "Guru", "Dinas Pendidikan", "Semua benar"] },
-    { text: "Apa tujuan utama ujian sekolah?", options: ["Mengukur kompetensi siswa", "Membuat siswa stres", "Mengisi waktu", "Menaikkan gaji guru"] }
+    { text: "Apa tujuan utama ujian sekolah?", options: ["Mengukur kompetensi", "Membuat stres", "Mengisi waktu", "Menaikkan gaji"] }
   ];
   
-  // Kunci jawaban (index 0 = A, 1 = B, 2 = C, 3 = D)
   let kunciJawaban = [0, 0, 0, 0, 0];
+  let roleTerpilih = null;
   
-  let selectedRole = null;
+  function pilihRole(role) {
+    roleTerpilih = role;
+    document.getElementById('loginInputArea').style.display = 'block';
+    const kelasInput = document.getElementById('kelasUser');
+    if (role === 'learn') {
+      kelasInput.style.display = 'block';
+      kelasInput.placeholder = "Kelas (contoh: XII RPL 1)";
+    } else {
+      kelasInput.style.display = 'none';
+    }
+  }
   
-  // ========== DOM Elements ==========
-  const learnBtn = document.getElementById('learnBtn');
-  const teachBtn = document.getElementById('teachBtn');
-  const loginInputDiv = document.getElementById('loginInput');
-  const namaInput = document.getElementById('namaInput');
-  const kelasInput = document.getElementById('kelasInput');
-  const submitLoginBtn = document.getElementById('submitLoginBtn');
-  
-  // ========== Fungsi Pilih Role ==========
-  learnBtn.onclick = function() {
-    selectedRole = 'learn';
-    learnBtn.style.borderColor = '#ffaa44';
-    learnBtn.style.background = '#2a3045';
-    teachBtn.style.borderColor = '#2a3040';
-    teachBtn.style.background = '#1a1f2e';
-    kelasInput.style.display = 'block';
-    kelasInput.placeholder = "Kelas (contoh: XII RPL 1)";
-    loginInputDiv.style.display = 'block';
-  };
-  
-  teachBtn.onclick = function() {
-    selectedRole = 'teach';
-    teachBtn.style.borderColor = '#ffaa44';
-    teachBtn.style.background = '#2a3045';
-    learnBtn.style.borderColor = '#2a3040';
-    learnBtn.style.background = '#1a1f2e';
-    kelasInput.style.display = 'none';
-    loginInputDiv.style.display = 'block';
-  };
-  
-  // ========== Fungsi Login ==========
-  submitLoginBtn.onclick = function() {
-    const nama = namaInput.value.trim();
-    const kelas = kelasInput.value.trim();
+  function prosesLogin() {
+    const nama = document.getElementById('namaUser').value.trim();
+    const kelas = document.getElementById('kelasUser').value.trim();
     
     if (!nama) {
       alert("Masukkan nama lengkap!");
       return;
     }
     
-    if (!selectedRole) {
+    if (!roleTerpilih) {
       alert("Pilih role terlebih dahulu!");
       return;
     }
     
-    if (selectedRole === 'learn' && !kelas) {
+    if (roleTerpilih === 'learn' && !kelas) {
       alert("Masukkan kelas!");
       return;
     }
     
-    if (selectedRole === 'learn') {
-      startExam(nama, kelas);
+    if (roleTerpilih === 'learn') {
+      mulaiUjian(nama, kelas);
     } else {
-      startTeacherDashboard(nama);
+      mulaiDashboard(nama);
     }
-  };
+  }
   
   // ========== UJIAN SISWA ==========
-  let jawaban = [];
-  let currentSoal = 0;
-  let waktu = 90 * 60;
-  let timerInterval = null;
+  let jawabanSiswa = [];
+  let soalSekarang = 0;
+  let waktuTersisa = 90 * 60;
+  let timerJalan = null;
   let ujianSelesai = false;
   
-  function startExam(nama, kelas) {
-    jawaban = new Array(soalData.length).fill(null);
-    currentSoal = 0;
-    waktu = 90 * 60;
+  function mulaiUjian(nama, kelas) {
+    jawabanSiswa = new Array(soalData.length).fill(null);
+    soalSekarang = 0;
+    waktuTersisa = 90 * 60;
     ujianSelesai = false;
-    if (timerInterval) clearInterval(timerInterval);
+    if (timerJalan) clearInterval(timerJalan);
     
     document.getElementById('loginPage').style.display = 'none';
-    const mainApp = document.getElementById('mainApp');
+    const mainArea = document.getElementById('mainArea');
     
-    mainApp.innerHTML = `
+    mainArea.innerHTML = `
       <div class="lockdown-bar">🔒 LOCKDOWN MODE 🔒 | DILARANG KELUAR</div>
       <div class="container">
         <div style="background: #1a1f2e; border-radius: 16px; padding: 12px; margin-bottom: 20px;">
@@ -455,34 +351,33 @@
         </div>
         <div id="soalContainer"></div>
         <div class="nav-buttons">
-          <button id="prevSoalBtn">◀ Sebelumnya</button>
-          <button id="nextSoalBtn" class="primary">Selanjutnya ▶</button>
+          <button id="prevBtn">◀ Sebelumnya</button>
+          <button id="nextBtn" class="primary">Selanjutnya ▶</button>
         </div>
         <div class="progress" id="progressText"></div>
-        <button id="submitUjianBtn" class="danger" style="margin-top: 20px;">📤 SUBMIT UJIAN</button>
+        <button id="submitBtn" class="danger" style="margin-top: 20px;">📤 SUBMIT UJIAN</button>
         <div class="credit">© 2026 | Made by Rashad</div>
       </div>
     `;
     
-    mainApp.style.display = 'block';
+    mainArea.style.display = 'block';
+    renderSoalUjian();
+    mulaiTimer();
     
-    renderSoal();
-    startTimer();
-    
-    document.getElementById('prevSoalBtn').onclick = () => { if (currentSoal > 0) { currentSoal--; renderSoal(); } };
-    document.getElementById('nextSoalBtn').onclick = () => { if (currentSoal < soalData.length - 1) { currentSoal++; renderSoal(); } };
-    document.getElementById('submitUjianBtn').onclick = () => submitExam(nama, kelas);
+    document.getElementById('prevBtn').onclick = () => { if (soalSekarang > 0) { soalSekarang--; renderSoalUjian(); } };
+    document.getElementById('nextBtn').onclick = () => { if (soalSekarang < soalData.length - 1) { soalSekarang++; renderSoalUjian(); } };
+    document.getElementById('submitBtn').onclick = () => submitUjian(nama, kelas);
   }
   
-  function renderSoal() {
+  function renderSoalUjian() {
     const container = document.getElementById('soalContainer');
-    const soal = soalData[currentSoal];
-    const jawab = jawaban[currentSoal];
+    const soal = soalData[soalSekarang];
+    const jawab = jawabanSiswa[soalSekarang];
     
     container.innerHTML = `
       <div class="soal-card">
         <div style="background: #ffaa44; color: #1a1a1a; display: inline-block; padding: 4px 12px; border-radius: 30px; font-size: 12px; margin-bottom: 15px;">
-          Soal ${currentSoal + 1}
+          Soal ${soalSekarang + 1}
         </div>
         <div class="soal-text">${soal.text}</div>
         <div class="options">
@@ -498,109 +393,93 @@
     
     document.querySelectorAll('.option').forEach(opt => {
       opt.onclick = () => {
-        jawaban[currentSoal] = parseInt(opt.dataset.opt);
-        renderSoal();
-        updateProgress();
+        jawabanSiswa[soalSekarang] = parseInt(opt.dataset.opt);
+        renderSoalUjian();
+        updateProgressUjian();
       };
     });
-    
-    updateProgress();
+    updateProgressUjian();
   }
   
-  function updateProgress() {
-    const answered = jawaban.filter(j => j !== null).length;
+  function updateProgressUjian() {
+    const answered = jawabanSiswa.filter(j => j !== null).length;
     const progress = document.getElementById('progressText');
     if (progress) progress.innerHTML = `📝 Terjawab: ${answered} / ${soalData.length} soal`;
   }
   
-  function startTimer() {
-    timerInterval = setInterval(() => {
-      if (!ujianSelesai && waktu > 0) {
-        waktu--;
-        const menit = Math.floor(waktu / 60);
-        const detik = waktu % 60;
+  function mulaiTimer() {
+    timerJalan = setInterval(() => {
+      if (!ujianSelesai && waktuTersisa > 0) {
+        waktuTersisa--;
+        const menit = Math.floor(waktuTersisa / 60);
+        const detik = waktuTersisa % 60;
         const timerDisplay = document.getElementById('timerDisplay');
         if (timerDisplay) timerDisplay.innerText = `${menit.toString().padStart(2, '0')}:${detik.toString().padStart(2, '0')}`;
-        if (waktu === 0) {
-          alert("⏰ WAKTU HABIS! Ujian akan disubmit otomatis.");
-          submitExam();
-        }
+        if (waktuTersisa === 0) submitUjian();
       }
     }, 1000);
   }
   
-  function submitExam(nama, kelas) {
-    const belumDijawab = jawaban.filter(j => j === null).length;
+  function submitUjian(nama, kelas) {
+    const belumDijawab = jawabanSiswa.filter(j => j === null).length;
     if (belumDijawab > 0) {
       alert(`⚠️ Masih ada ${belumDijawab} soal yang belum dijawab!`);
       return;
     }
     
     ujianSelesai = true;
-    clearInterval(timerInterval);
+    clearInterval(timerJalan);
     
-    // Hitung skor berdasarkan kunci jawaban
     let score = 0;
-    for (let i = 0; i < jawaban.length; i++) {
-      if (jawaban[i] === kunciJawaban[i]) {
-        score++;
-      }
+    for (let i = 0; i < jawabanSiswa.length; i++) {
+      if (jawabanSiswa[i] === kunciJawaban[i]) score++;
     }
     const nilai = Math.round((score / soalData.length) * 100);
     
     document.getElementById('soalContainer').innerHTML = `
-      <div class="result-card">
+      <div class="result-card" style="background: #11151f; border-radius: 24px; padding: 30px; text-align: center;">
         <h2>🎉 UJIAN SELESAI 🎉</h2>
-        <div class="nilai-besar">${nilai}%</div>
+        <div style="font-size: 3rem; margin: 20px;">${nilai}%</div>
         <p>Skor: ${score} / ${soalData.length}</p>
         <p>${nilai >= 75 ? '✅ LULUS' : '❌ TIDAK LULUS'}</p>
       </div>
     `;
     document.querySelector('.nav-buttons').style.display = 'none';
-    document.getElementById('submitUjianBtn').style.display = 'none';
+    document.getElementById('submitBtn').style.display = 'none';
     document.querySelector('.timer-box').style.display = 'none';
     
-    // Kirim ke Telegram
-    kirimTelegram(nama, kelas, score, nilai);
+    kirimKeTelegram(nama, kelas, score, nilai);
   }
   
   // ========== DASHBOARD GURU ==========
-  function startTeacherDashboard(nama) {
+  function mulaiDashboard(nama) {
     document.getElementById('loginPage').style.display = 'none';
-    const mainApp = document.getElementById('mainApp');
+    const mainArea = document.getElementById('mainArea');
     
-    renderDashboardGuru(mainApp, nama);
-  }
-  
-  function renderDashboardGuru(mainApp, nama) {
-    mainApp.innerHTML = `
+    mainArea.innerHTML = `
       <div class="container">
         <div class="dashboard-header">
           <h1>👨‍🏫 DASHBOARD GURU</h1>
           <div>
-            <button id="tambahSoalBtnGuru" class="btn-tambah">+ Tambah Soal</button>
-            <button id="logoutBtnGuru" class="btn-logout">Logout</button>
+            <button class="btn-tambah" onclick="tambahSoal()">+ Tambah Soal</button>
+            <button class="btn-logout" onclick="location.reload()">Logout</button>
           </div>
         </div>
         <div style="background: #1a1f2e; border-radius: 16px; padding: 15px; margin-bottom: 20px;">
           <p>👤 Guru: <strong>${nama}</strong></p>
-          <p>📋 Total Soal: <strong id="totalSoalCount">${soalData.length}</strong> soal</p>
-          <p>🔑 Total Kunci: <strong id="totalKunciCount">${soalData.length}</strong> jawaban</p>
+          <p>📋 Total Soal: <strong id="totalSoal">${soalData.length}</strong> soal</p>
         </div>
-        <div id="soalListContainer" class="soal-list"></div>
+        <div id="soalList"></div>
         <div class="credit">© 2026 | Made by Rashad</div>
       </div>
     `;
     
-    mainApp.style.display = 'block';
+    mainArea.style.display = 'block';
     renderSoalList();
-    
-    document.getElementById('tambahSoalBtnGuru').onclick = tambahSoal;
-    document.getElementById('logoutBtnGuru').onclick = () => location.reload();
   }
   
   function renderSoalList() {
-    const container = document.getElementById('soalListContainer');
+    const container = document.getElementById('soalList');
     if (!container) return;
     
     container.innerHTML = soalData.map((soal, idx) => {
@@ -610,90 +489,90 @@
           <div class="soal-item-header">
             <span style="background: #ffaa44; color: #1a1a1a; padding: 2px 10px; border-radius: 20px;">Soal ${idx + 1}</span>
             <div>
-              <button onclick="editKunciFunc(${idx})" style="background: #ffaa44; border: none; padding: 5px 12px; border-radius: 20px; cursor: pointer;">🔑 Kunci: ${kunciHuruf}</button>
-              <button onclick="editSoalFunc(${idx})" style="background: #44aaff; border: none; padding: 5px 12px; border-radius: 20px; cursor: pointer;">✏️ Edit</button>
-              <button onclick="hapusSoalFunc(${idx})" style="background: #dc2626; border: none; padding: 5px 12px; border-radius: 20px; cursor: pointer; margin-left: 5px;">🗑️ Hapus</button>
+              <button onclick="editKunci(${idx})" style="background: #ffaa44; border: none; padding: 5px 12px; border-radius: 20px; cursor: pointer;">🔑 Kunci: ${kunciHuruf}</button>
+              <button onclick="editSoal(${idx})" style="background: #44aaff; border: none; padding: 5px 12px; border-radius: 20px; cursor: pointer;">✏️ Edit</button>
+              <button onclick="hapusSoal(${idx})" style="background: #dc2626; border: none; padding: 5px 12px; border-radius: 20px; cursor: pointer;">🗑️ Hapus</button>
             </div>
           </div>
-          <div class="soal-text" style="margin-top: 10px;">📖 ${soal.text}</div>
+          <div style="margin-top: 10px;">📖 ${soal.text}</div>
           <div style="font-size: 12px; color: #888; margin-top: 10px;">
-            A. ${soal.options[0]}<br>
-            B. ${soal.options[1]}<br>
-            C. ${soal.options[2]}<br>
-            D. ${soal.options[3]}
+            A. ${soal.options[0]}<br> B. ${soal.options[1]}<br> C. ${soal.options[2]}<br> D. ${soal.options[3]}
           </div>
         </div>
       `;
     }).join('');
     
-    const totalSpan = document.getElementById('totalSoalCount');
+    const totalSpan = document.getElementById('totalSoal');
     if (totalSpan) totalSpan.innerText = soalData.length;
   }
   
-  // Edit kunci jawaban
-  window.editKunciFunc = function(idx) {
-    const pilihan = prompt(`Set kunci jawaban untuk soal ${idx + 1}:\nA (0) | B (1) | C (2) | D (3)`, kunciJawaban[idx]);
-    if (pilihan !== null) {
-      const val = parseInt(pilihan);
-      if (val >= 0 && val <= 3) {
-        kunciJawaban[idx] = val;
-        alert(`✅ Kunci jawaban soal ${idx + 1} diubah menjadi ${String.fromCharCode(65 + val)}`);
+  window.editKunci = function(idx) {
+    const val = prompt(`Kunci jawaban soal ${idx + 1}:\n0=A | 1=B | 2=C | 3=D`, kunciJawaban[idx]);
+    if (val !== null) {
+      const v = parseInt(val);
+      if (v >= 0 && v <= 3) {
+        kunciJawaban[idx] = v;
+        alert(`✅ Kunci diubah menjadi ${String.fromCharCode(65 + v)}`);
         renderSoalList();
-      } else {
-        alert("Masukkan angka 0-3 (0=A, 1=B, 2=C, 3=D)");
-      }
+      } else alert("Masukkan 0-3");
     }
   };
   
-  window.editSoalFunc = function(idx) {
+  window.editSoal = function(idx) {
     const soal = soalData[idx];
     const newText = prompt("Edit soal:", soal.text);
     if (newText) soal.text = newText;
-    
-    const newA = prompt("Option A:", soal.options[0]);
-    const newB = prompt("Option B:", soal.options[1]);
-    const newC = prompt("Option C:", soal.options[2]);
-    const newD = prompt("Option D:", soal.options[3]);
-    
-    if (newA) soal.options[0] = newA;
-    if (newB) soal.options[1] = newB;
-    if (newC) soal.options[2] = newC;
-    if (newD) soal.options[3] = newD;
-    
+    const a = prompt("Option A:", soal.options[0]);
+    const b = prompt("Option B:", soal.options[1]);
+    const c = prompt("Option C:", soal.options[2]);
+    const d = prompt("Option D:", soal.options[3]);
+    if (a) soal.options[0] = a;
+    if (b) soal.options[1] = b;
+    if (c) soal.options[2] = c;
+    if (d) soal.options[3] = d;
     renderSoalList();
-    alert("✅ Soal berhasil diedit!");
+    alert("✅ Soal diedit!");
   };
   
-  window.hapusSoalFunc = function(idx) {
+  window.hapusSoal = function(idx) {
     if (confirm("Hapus soal ini?")) {
       soalData.splice(idx, 1);
       kunciJawaban.splice(idx, 1);
       renderSoalList();
-      alert("✅ Soal berhasil dihapus!");
+      alert("✅ Soal dihapus!");
     }
   };
   
-  function tambahSoal() {
-    const text = prompt("Masukkan teks soal:");
+  window.tambahSoal = function() {
+    const text = prompt("Teks soal:");
     if (!text) return;
-    
     const a = prompt("Option A:");
     const b = prompt("Option B:");
     const c = prompt("Option C:");
     const d = prompt("Option D:");
-    
     if (a && b && c && d) {
       soalData.push({ text, options: [a, b, c, d] });
       kunciJawaban.push(0);
       renderSoalList();
-      alert("✅ Soal berhasil ditambahkan!");
-    } else {
-      alert("Harap isi semua option!");
-    }
-  }
+      alert("✅ Soal ditambahkan!");
+    } else alert("Isi semua option!");
+  };
   
   // ========== TELEGRAM ==========
-  function kirimTelegram(nama, kelas, score, nilai) {
-    const pesan = `📢 HASIL UJIAN SMK\n\nNama: ${nama}\nKelas: ${kelas}\nSkor: ${score}/${soalData.length}\nNilai: ${nilai}%\nStatus: ${nilai >= 75 ? 'LULUS ✅' : 'TIDAK LULUS ❌'}\n\n© 2026 | MAE Education`;
-    
-    fetch(`https://api.telegram.org/bot8743858038:AAHr-VAbGCphu9uy584H
+  function kirimKeTelegram(nama, kelas, score, nilai) {
+    const pesan = `📢 HASIL UJIAN SMK\n\nNama: ${nama}\nKelas: ${kelas}\nSkor: ${score}/${soalData.length}\nNilai: ${nilai}%\nStatus: ${nilai >= 75 ? 'LULUS ✅' : 'TIDAK LULUS ❌'}`;
+    fetch(`https://api.telegram.org/bot8743858038:AAHr-VAbGCphu9uy584HPG6GunbdFG3AjE8/sendMessage`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ chat_id: '7509845641', text: pesan })
+    }).catch(e => console.log(e));
+  }
+  
+  // Blok klik kanan & F12
+  document.addEventListener('contextmenu', (e) => e.preventDefault());
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I')) e.preventDefault();
+  });
+</script>
+</body>
+</html>
