@@ -103,9 +103,18 @@
     .role-btn.learnid i { color: #44aaff; }
     .role-btn.teachid i { color: #ffaa44; }
     
+    .role-btn.selected {
+      border-color: #ffaa44;
+      background: #2a3045;
+    }
+    
     .login-input {
       margin-top: 20px;
       display: none;
+    }
+    
+    .login-input.show {
+      display: block;
     }
     
     .login-input input {
@@ -153,7 +162,6 @@
       z-index: 100;
     }
     
-    /* Timer & Soal (sama seperti sebelumnya) */
     .header { text-align: center; margin-bottom: 20px; }
     .header h1 { font-size: 1.5rem; background: linear-gradient(135deg, #ffffff, #a0a0a0); background-clip: text; -webkit-background-clip: text; color: transparent; }
     .info-siswa { background: #1a1f2e; border-radius: 16px; padding: 12px 16px; margin-bottom: 20px; border: 1px solid #2a3040; }
@@ -263,12 +271,12 @@
       <div class="sub">Pilih Role Login</div>
       
       <div class="role-buttons">
-        <div class="role-btn learnid" onclick="selectRole('learn')">
+        <div class="role-btn learnid" data-role="learn">
           <i>🎓</i>
           <div class="role-title">LearnID</div>
           <div class="role-desc">Siswa / Peserta Ujian</div>
         </div>
-        <div class="role-btn teachid" onclick="selectRole('teach')">
+        <div class="role-btn teachid" data-role="teach">
           <i>👨‍🏫</i>
           <div class="role-title">TeachID</div>
           <div class="role-desc">Guru / Pengelola Soal</div>
@@ -278,7 +286,7 @@
       <div id="loginInput" class="login-input">
         <input type="text" id="loginNama" placeholder="Masukkan Nama Lengkap">
         <input type="text" id="loginKelas" placeholder="Kelas (untuk siswa)">
-        <button class="login-btn" onclick="prosesLogin()">Login</button>
+        <button class="login-btn" id="loginBtn">Login</button>
       </div>
     </div>
   </div>
@@ -297,50 +305,67 @@
     { text: "Apa tujuan utama ujian sekolah?", options: ["Mengukur pencapaian kompetensi siswa", "Membuat siswa stres", "Mengisi waktu", "Menaikkan gaji guru"] }
   ];
   
-  let currentRole = null;
-  let currentUser = null;
+  let kunciJawaban = [0, 0, 0, 0, 0];
+  let selectedRole = null;
   
-  // Kunci jawaban (index 0 untuk semua)
-  const kunciJawaban = [0, 0, 0, 0, 0];
+  // ========== DOM ELEMENTS ==========
+  const roleBtns = document.querySelectorAll('.role-btn');
+  const loginInput = document.getElementById('loginInput');
+  const loginNama = document.getElementById('loginNama');
+  const loginKelas = document.getElementById('loginKelas');
+  const loginBtn = document.getElementById('loginBtn');
   
-  // ========== FUNGSI LOGIN ==========
-  function selectRole(role) {
-    currentRole = role;
-    const loginInput = document.getElementById('loginInput');
-    const kelasInput = document.getElementById('loginKelas');
-    
-    if (role === 'learn') {
-      kelasInput.style.display = 'block';
-      kelasInput.placeholder = "Kelas (contoh: XII RPL 1)";
-    } else {
-      kelasInput.style.display = 'none';
-    }
-    
-    loginInput.style.display = 'block';
-  }
+  // ========== SELECT ROLE ==========
+  roleBtns.forEach(btn => {
+    btn.addEventListener('click', function() {
+      // Remove selected class from all
+      roleBtns.forEach(b => b.classList.remove('selected'));
+      // Add selected class to current
+      this.classList.add('selected');
+      // Get role
+      selectedRole = this.getAttribute('data-role');
+      
+      // Show login input
+      loginInput.classList.add('show');
+      
+      // Show/hide kelas input
+      if (selectedRole === 'learn') {
+        loginKelas.style.display = 'block';
+        loginKelas.placeholder = "Kelas (contoh: XII RPL 1)";
+      } else {
+        loginKelas.style.display = 'none';
+      }
+    });
+  });
   
-  function prosesLogin() {
-    const nama = document.getElementById('loginNama').value.trim();
-    const kelas = document.getElementById('loginKelas').value.trim();
+  // ========== LOGIN FUNCTION ==========
+  loginBtn.addEventListener('click', function() {
+    const nama = loginNama.value.trim();
+    const kelas = loginKelas.value.trim();
     
     if (!nama) {
       alert("Masukkan nama lengkap!");
       return;
     }
     
-    if (currentRole === 'learn' && !kelas) {
+    if (selectedRole === 'learn' && !kelas) {
       alert("Masukkan kelas!");
       return;
     }
     
-    currentUser = { nama, kelas, role: currentRole };
-    
-    if (currentRole === 'learn') {
-      startStudentExam();
-    } else {
-      startTeacherDashboard();
+    if (!selectedRole) {
+      alert("Pilih role terlebih dahulu!");
+      return;
     }
-  }
+    
+    const user = { nama, kelas, role: selectedRole };
+    
+    if (selectedRole === 'learn') {
+      startStudentExam(user);
+    } else {
+      startTeacherDashboard(user);
+    }
+  });
   
   // ========== MODE LEARNID (SISWA) ==========
   let jawabanUser = [];
@@ -349,8 +374,7 @@
   let timerInterval = null;
   let examSubmitted = false;
   
-  function startStudentExam() {
-    // Reset data ujian
+  function startStudentExam(user) {
     jawabanUser = new Array(soalData.length).fill(null);
     currentIndex = 0;
     timerSeconds = 90 * 60;
@@ -368,8 +392,8 @@
         </div>
         
         <div class="info-siswa">
-          <p>👤 Nama: <span>${currentUser.nama}</span></p>
-          <p>📚 Kelas: <span>${currentUser.kelas}</span></p>
+          <p>👤 Nama: <span>${user.nama}</span></p>
+          <p>📚 Kelas: <span>${user.kelas}</span></p>
         </div>
         
         <div class="timer-box">
@@ -393,30 +417,30 @@
     
     // Lockdown functions
     window.history.pushState(null, null, location.href);
-    window.addEventListener('popstate', function() { if (!examSubmitted) showStudentWarning(); window.history.pushState(null, null, location.href); });
+    window.addEventListener('popstate', function() { if (!examSubmitted) showWarning(); window.history.pushState(null, null, location.href); });
     document.addEventListener('contextmenu', (e) => e.preventDefault());
     document.addEventListener('keydown', (e) => {
       if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J')) || (e.ctrlKey && e.key === 'u')) {
         e.preventDefault();
-        showStudentWarning();
+        showWarning();
       }
     });
     
     renderStudentSoal();
-    startStudentTimer();
+    startStudentTimer(user);
     
     document.getElementById('prevBtn').addEventListener('click', () => { if (currentIndex > 0) { currentIndex--; renderStudentSoal(); } });
     document.getElementById('nextBtn').addEventListener('click', () => { if (currentIndex < soalData.length - 1) { currentIndex++; renderStudentSoal(); } });
-    document.getElementById('submitBtn').addEventListener('click', () => submitStudentExam());
+    document.getElementById('submitBtn').addEventListener('click', () => submitStudentExam(user));
   }
   
-  function showStudentWarning() {
+  function showWarning() {
     let modal = document.getElementById('warningModal');
     if (!modal) {
       modal = document.createElement('div');
       modal.id = 'warningModal';
       modal.className = 'modal';
-      modal.innerHTML = `<div class="modal-content"><h2>⚠️ PERINGATAN ⚠️</h2><p>Jangan keluar dari ujian sebelum selesai!</p><button onclick="document.getElementById('warningModal').classList.add('hidden')">Kembali ke Ujian</button></div>`;
+      modal.innerHTML = `<div class="modal-content"><h2>⚠️ PERINGATAN ⚠️</h2><p>Jangan keluar dari ujian sebelum selesai!</p><button onclick="document.getElementById('warningModal').remove()">Kembali ke Ujian</button></div>`;
       document.body.appendChild(modal);
     }
     modal.classList.remove('hidden');
@@ -424,6 +448,7 @@
   
   function renderStudentSoal() {
     const container = document.getElementById('soalContainer');
+    if (!container) return;
     const soal = soalData[currentIndex];
     const jawaban = jawabanUser[currentIndex];
     
@@ -452,23 +477,25 @@
     });
     
     const answeredCount = jawabanUser.filter(j => j !== null).length;
-    document.getElementById('progress').innerHTML = `📝 Terjawab: ${answeredCount} / ${soalData.length} soal`;
+    const progressEl = document.getElementById('progress');
+    if (progressEl) progressEl.innerHTML = `📝 Terjawab: ${answeredCount} / ${soalData.length} soal`;
   }
   
-  function startStudentTimer() {
+  function startStudentTimer(user) {
     if (timerInterval) clearInterval(timerInterval);
     timerInterval = setInterval(() => {
       if (!examSubmitted && timerSeconds > 0) {
         timerSeconds--;
         const minutes = Math.floor(timerSeconds / 60);
         const seconds = timerSeconds % 60;
-        document.getElementById('timer').innerText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-        if (timerSeconds === 0) submitStudentExam();
+        const timerEl = document.getElementById('timer');
+        if (timerEl) timerEl.innerText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        if (timerSeconds === 0) submitStudentExam(user);
       }
     }, 1000);
   }
   
-  function submitStudentExam() {
+  function submitStudentExam(user) {
     if (examSubmitted) return;
     const unanswered = jawabanUser.filter(j => j === null).length;
     if (unanswered > 0) {
@@ -483,24 +510,30 @@
     jawabanUser.forEach((jawab, idx) => { if (jawab === kunciJawaban[idx]) score++; });
     const nilai = Math.round((score / soalData.length) * 100);
     
-    document.getElementById('soalContainer').innerHTML = `
-      <div class="result-card">
-        <h2>🎉 UJIAN SELESAI 🎉</h2>
-        <div class="nilai-besar">${nilai}%</div>
-        <p>Skor: ${score} / ${soalData.length}</p>
-        <p>${nilai >= 75 ? '✅ LULUS' : '❌ TIDAK LULUS'}</p>
-      </div>
-    `;
-    document.querySelector('.nav-buttons').style.display = 'none';
-    document.getElementById('submitBtn').style.display = 'none';
-    document.querySelector('.timer-box').style.display = 'none';
+    const soalContainer = document.getElementById('soalContainer');
+    if (soalContainer) {
+      soalContainer.innerHTML = `
+        <div class="result-card">
+          <h2>🎉 UJIAN SELESAI 🎉</h2>
+          <div class="nilai-besar">${nilai}%</div>
+          <p>Skor: ${score} / ${soalData.length}</p>
+          <p>${nilai >= 75 ? '✅ LULUS' : '❌ TIDAK LULUS'}</p>
+        </div>
+      `;
+    }
+    const navButtons = document.querySelector('.nav-buttons');
+    if (navButtons) navButtons.style.display = 'none';
+    const submitBtn = document.getElementById('submitBtn');
+    if (submitBtn) submitBtn.style.display = 'none';
+    const timerBox = document.querySelector('.timer-box');
+    if (timerBox) timerBox.style.display = 'none';
     
     // Kirim ke Telegram
-    kirimKeTelegram({ nama: currentUser.nama, kelas: currentUser.kelas, nilai, score, total: soalData.length });
+    kirimKeTelegram({ nama: user.nama, kelas: user.kelas, nilai, score, total: soalData.length });
   }
   
   // ========== MODE TEACHID (GURU) ==========
-  function startTeacherDashboard() {
+  function startTeacherDashboard(user) {
     document.getElementById('loginPage').style.display = 'none';
     const mainApp = document.getElementById('mainApp');
     
@@ -514,7 +547,7 @@
           </div>
         </div>
         <div style="background: #1a1f2e; border-radius: 16px; padding: 15px; margin-bottom: 20px;">
-          <p>👤 Guru: <strong>${currentUser.nama}</strong></p>
+          <p>👤 Guru: <strong>${user.nama}</strong></p>
           <p>📋 Total Soal: <strong id="totalSoal">${soalData.length}</strong> soal</p>
           <p>🎯 Mode: <strong style="color: #ffaa44;">EDIT & KELOLA SOAL</strong></p>
         </div>
@@ -540,8 +573,8 @@
         <div class="soal-item-header">
           <span class="soal-num">Soal ${idx + 1}</span>
           <div class="soal-actions">
-            <button class="btn-edit" onclick="editSoal(${idx})">✏️ Edit</button>
-            <button class="btn-delete" onclick="hapusSoal(${idx})">🗑️ Hapus</button>
+            <button class="btn-edit" onclick="window.editSoal(${idx})">✏️ Edit</button>
+            <button class="btn-delete" onclick="window.hapusSoal(${idx})">🗑️ Hapus</button>
           </div>
         </div>
         <div class="soal-item-text">📖 ${soal.text}</div>
@@ -554,42 +587,10 @@
       </div>
     `).join('');
     
-    document.getElementById('totalSoal').innerText = soalData.length;
+    const totalSoalEl = document.getElementById('totalSoal');
+    if (totalSoalEl) totalSoalEl.innerText = soalData.length;
   }
   
-  function editSoal(idx) {
+  window.editSoal = function(idx) {
     const soal = soalData[idx];
     const newText = prompt("Edit soal:", soal.text);
-    if (newText && newText.trim()) {
-      soalData[idx].text = newText.trim();
-      
-      const newOptA = prompt("Option A:", soal.options[0]);
-      const newOptB = prompt("Option B:", soal.options[1]);
-      const newOptC = prompt("Option C:", soal.options[2]);
-      const newOptD = prompt("Option D:", soal.options[3]);
-      
-      if (newOptA) soalData[idx].options[0] = newOptA;
-      if (newOptB) soalData[idx].options[1] = newOptB;
-      if (newOptC) soalData[idx].options[2] = newOptC;
-      if (newOptD) soalData[idx].options[3] = newOptD;
-      
-      renderSoalList();
-      alert("✅ Soal berhasil diedit!");
-    }
-  }
-  
-  function hapusSoal(idx) {
-    if (confirm(`Hapus soal "${soalData[idx].text}"?`)) {
-      soalData.splice(idx, 1);
-      renderSoalList();
-      alert("✅ Soal berhasil dihapus!");
-    }
-  }
-  
-  function showTambahSoalModal() {
-    const text = prompt("Masukkan teks soal:");
-    if (!text) return;
-    
-    const optA = prompt("Option A:");
-    const optB = prompt("Option B:");
-    const optC = prompt("Option
