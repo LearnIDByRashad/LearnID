@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <title>🔒 UJIAN ONLINE SMK | Lockdown Mode</title>
+  <title>🔒 UJIAN ONLINE SMK | LearnID / TeachID</title>
   <style>
     * {
       margin: 0;
@@ -21,7 +21,126 @@
       overflow-x: hidden;
     }
     
-    /* LOCKDOWN WARNING BAR */
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px 16px 40px;
+    }
+    
+    /* Login Page */
+    .login-page {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+    
+    .login-card {
+      background: #11151f;
+      border-radius: 32px;
+      padding: 40px 30px;
+      text-align: center;
+      border: 1px solid #2a3040;
+      max-width: 400px;
+      width: 100%;
+    }
+    
+    .login-card h1 {
+      font-size: 1.8rem;
+      margin-bottom: 10px;
+      background: linear-gradient(135deg, #ffffff, #a0a0a0);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+    
+    .login-card .sub {
+      color: #888;
+      font-size: 0.8rem;
+      margin-bottom: 30px;
+    }
+    
+    .role-buttons {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+    
+    .role-btn {
+      flex: 1;
+      background: #1a1f2e;
+      border: 2px solid #2a3040;
+      border-radius: 60px;
+      padding: 15px;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: center;
+    }
+    
+    .role-btn:hover {
+      border-color: #ffaa44;
+      transform: translateY(-2px);
+    }
+    
+    .role-btn i {
+      font-size: 2rem;
+      margin-bottom: 8px;
+      display: block;
+    }
+    
+    .role-btn .role-title {
+      font-weight: bold;
+      font-size: 1.1rem;
+    }
+    
+    .role-btn .role-desc {
+      font-size: 0.7rem;
+      color: #888;
+      margin-top: 5px;
+    }
+    
+    .role-btn.learnid i { color: #44aaff; }
+    .role-btn.teachid i { color: #ffaa44; }
+    
+    .login-input {
+      margin-top: 20px;
+      display: none;
+    }
+    
+    .login-input input {
+      width: 100%;
+      padding: 14px;
+      border-radius: 60px;
+      border: 1px solid #2a3040;
+      background: #1a1f2e;
+      color: white;
+      font-size: 1rem;
+      margin-bottom: 15px;
+      outline: none;
+    }
+    
+    .login-input input:focus {
+      border-color: #ffaa44;
+    }
+    
+    .login-btn {
+      width: 100%;
+      padding: 14px;
+      border-radius: 60px;
+      background: #ffaa44;
+      color: #1a1a1a;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+    
+    .login-btn:hover {
+      background: #ffcc66;
+    }
+    
+    /* Lockdown Bar */
     .lockdown-bar {
       background: #dc2626;
       color: white;
@@ -29,407 +148,281 @@
       padding: 8px;
       font-size: 12px;
       font-weight: bold;
-      letter-spacing: 1px;
       position: sticky;
       top: 0;
       z-index: 100;
     }
     
-    .container {
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 20px 16px 40px;
-    }
+    /* Timer & Soal (sama seperti sebelumnya) */
+    .header { text-align: center; margin-bottom: 20px; }
+    .header h1 { font-size: 1.5rem; background: linear-gradient(135deg, #ffffff, #a0a0a0); background-clip: text; -webkit-background-clip: text; color: transparent; }
+    .info-siswa { background: #1a1f2e; border-radius: 16px; padding: 12px 16px; margin-bottom: 20px; border: 1px solid #2a3040; }
+    .info-siswa p { font-size: 0.85rem; margin: 4px 0; }
+    .info-siswa span { color: #ffaa44; font-weight: bold; }
+    .timer-box { background: #1a1f2e; border: 2px solid #ff4444; border-radius: 60px; padding: 12px 20px; text-align: center; margin-bottom: 20px; }
+    .timer { font-size: 2.5rem; font-weight: bold; font-family: monospace; color: #ff4444; }
+    .soal-card { background: #11151f; border-radius: 20px; padding: 20px; margin-bottom: 20px; border: 1px solid #2a3040; }
+    .soal-header { display: flex; justify-content: space-between; margin-bottom: 15px; }
+    .soal-num { background: #ffaa44; color: #1a1a1a; padding: 4px 12px; border-radius: 30px; font-size: 0.8rem; font-weight: bold; }
+    .soal-text { font-size: 1rem; margin-bottom: 20px; line-height: 1.5; }
+    .options { display: flex; flex-direction: column; gap: 10px; }
+    .option { background: #1a1f2e; border: 1px solid #2a3040; border-radius: 50px; padding: 12px 18px; cursor: pointer; display: flex; align-items: center; gap: 12px; transition: all 0.2s; }
+    .option:hover { background: #222838; border-color: #ffaa44; }
+    .option.selected { background: #2a3045; border-color: #ffaa44; box-shadow: 0 0 8px rgba(255,170,68,0.3); }
+    .option-letter { font-weight: bold; color: #ffaa44; width: 28px; }
+    .nav-buttons { display: flex; gap: 15px; margin-top: 20px; }
+    button { background: #2a3040; border: none; padding: 12px 20px; border-radius: 50px; color: white; font-weight: bold; cursor: pointer; flex: 1; }
+    button.primary { background: #ffaa44; color: #1a1a1a; }
+    button.danger { background: #dc2626; }
+    .progress { text-align: center; margin-top: 15px; font-size: 0.75rem; color: #888; }
+    .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); display: flex; justify-content: center; align-items: center; z-index: 1000; backdrop-filter: blur(10px); }
+    .modal-content { background: #1a1f2e; border-radius: 24px; padding: 30px; text-align: center; max-width: 300px; border: 1px solid #ffaa44; }
+    .hidden { display: none; }
+    .result-card { background: #11151f; border-radius: 24px; padding: 30px; text-align: center; border: 1px solid #ffaa44; }
+    .nilai-besar { font-size: 3rem; font-weight: bold; margin: 20px 0; }
     
-    /* Header & Info Siswa */
-    .header {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-    
-    .header h1 {
-      font-size: 1.5rem;
-      background: linear-gradient(135deg, #ffffff, #a0a0a0);
-      background-clip: text;
-      -webkit-background-clip: text;
-      color: transparent;
-      margin-bottom: 5px;
-    }
-    
-    .subtitle {
-      font-size: 0.75rem;
-      color: #888;
-    }
-    
-    .info-siswa {
-      background: #1a1f2e;
-      border-radius: 16px;
-      padding: 12px 16px;
-      margin-bottom: 20px;
-      border: 1px solid #2a3040;
-    }
-    
-    .info-siswa p {
-      font-size: 0.85rem;
-      margin: 4px 0;
-    }
-    
-    .info-siswa span {
-      color: #ffaa44;
-      font-weight: bold;
-    }
-    
-    /* Timer */
-    .timer-box {
-      background: #1a1f2e;
-      border: 2px solid #ff4444;
-      border-radius: 60px;
-      padding: 12px 20px;
-      text-align: center;
-      margin-bottom: 20px;
-    }
-    
-    .timer {
-      font-size: 2.5rem;
-      font-weight: bold;
-      font-family: 'Courier New', monospace;
-      color: #ff4444;
-    }
-    
-    .timer-label {
-      font-size: 0.7rem;
-      color: #888;
-    }
-    
-    /* Soal Card */
-    .soal-card {
-      background: #11151f;
-      border-radius: 20px;
-      padding: 20px;
-      margin-bottom: 20px;
-      border: 1px solid #2a3040;
-    }
-    
-    .soal-header {
+    /* Dashboard Guru */
+    .dashboard-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 15px;
-    }
-    
-    .soal-num {
-      font-size: 0.8rem;
-      background: #ffaa44;
-      color: #1a1a1a;
-      padding: 4px 12px;
-      border-radius: 30px;
-      font-weight: bold;
-    }
-    
-    .soal-point {
-      font-size: 0.7rem;
-      color: #888;
-    }
-    
-    .soal-text {
-      font-size: 1rem;
       margin-bottom: 20px;
-      line-height: 1.5;
-      font-weight: 500;
-    }
-    
-    /* Options */
-    .options {
-      display: flex;
-      flex-direction: column;
+      flex-wrap: wrap;
       gap: 10px;
     }
-    
-    .option {
-      background: #1a1f2e;
-      border: 1px solid #2a3040;
-      border-radius: 50px;
-      padding: 12px 18px;
-      cursor: pointer;
-      transition: all 0.2s;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    
-    .option:hover {
-      background: #222838;
-      border-color: #ffaa44;
-    }
-    
-    .option.selected {
-      background: #2a3045;
-      border-color: #ffaa44;
-      box-shadow: 0 0 8px rgba(255,170,68,0.3);
-    }
-    
-    .option-letter {
-      font-weight: bold;
-      color: #ffaa44;
-      width: 28px;
-      font-size: 1rem;
-    }
-    
-    .option-text {
-      flex: 1;
-      font-size: 0.9rem;
-    }
-    
-    /* Navigation */
-    .nav-buttons {
-      display: flex;
-      justify-content: space-between;
-      gap: 15px;
-      margin-top: 20px;
-    }
-    
-    button {
-      background: #2a3040;
-      border: none;
-      padding: 12px 20px;
-      border-radius: 50px;
-      color: white;
-      font-weight: bold;
-      cursor: pointer;
-      transition: 0.2s;
-      flex: 1;
-      font-size: 0.9rem;
-    }
-    
-    button:hover {
-      background: #3a4055;
-    }
-    
-    button.primary {
+    .btn-tambah {
       background: #ffaa44;
       color: #1a1a1a;
-    }
-    
-    button.primary:hover {
-      background: #ffcc66;
-    }
-    
-    button.danger {
-      background: #dc2626;
-    }
-    
-    .progress {
-      text-align: center;
-      margin-top: 15px;
-      font-size: 0.75rem;
-      color: #888;
-    }
-    
-    /* Modal Peringatan */
-    .modal {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.95);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 1000;
-      backdrop-filter: blur(10px);
-    }
-    
-    .modal-content {
-      background: #1a1f2e;
-      border-radius: 24px;
-      padding: 30px;
-      text-align: center;
-      max-width: 300px;
-      border: 1px solid #ffaa44;
-    }
-    
-    .modal-content h2 {
-      color: #ffaa44;
-      margin-bottom: 15px;
-    }
-    
-    .modal-content p {
-      margin-bottom: 20px;
-      font-size: 0.9rem;
-    }
-    
-    .hidden {
-      display: none;
-    }
-    
-    /* Hasil Ujian */
-    .result-card {
-      background: #11151f;
-      border-radius: 24px;
-      padding: 30px;
-      text-align: center;
-      border: 1px solid #ffaa44;
-    }
-    
-    .result-card h2 {
-      color: #ffaa44;
-      margin-bottom: 20px;
-    }
-    
-    .nilai-besar {
-      font-size: 3rem;
+      padding: 10px 20px;
+      border-radius: 60px;
+      border: none;
+      cursor: pointer;
       font-weight: bold;
-      margin: 20px 0;
     }
+    .btn-logout {
+      background: #dc2626;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 60px;
+      border: none;
+      cursor: pointer;
+    }
+    .soal-list {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+    .soal-item {
+      background: #1a1f2e;
+      border-radius: 16px;
+      padding: 15px;
+      border: 1px solid #2a3040;
+    }
+    .soal-item-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .soal-item-text {
+      margin-bottom: 10px;
+      padding: 10px;
+      background: #11151f;
+      border-radius: 12px;
+    }
+    .soal-item-options {
+      font-size: 0.8rem;
+      color: #aaa;
+      margin-bottom: 10px;
+    }
+    .soal-actions button {
+      width: auto;
+      padding: 5px 12px;
+      margin-right: 8px;
+      font-size: 0.8rem;
+    }
+    .btn-edit { background: #44aaff; }
+    .btn-delete { background: #dc2626; }
     
     @media (max-width: 600px) {
-      .container { padding: 15px; }
+      .role-buttons { flex-direction: column; }
       .timer { font-size: 1.8rem; }
-      .option { padding: 10px 14px; }
-      .soal-text { font-size: 0.9rem; }
+      .dashboard-header { flex-direction: column; }
     }
   </style>
 </head>
 <body>
 
-<div class="lockdown-bar">
-  🔒 LOCKDOWN MODE AKTIF 🔒 | UJIAN ONLINE SMK | DILARANG KELUAR APLIKASI
-</div>
-
-<div class="container" id="appContainer">
-  <div class="header">
-    <h1>📝 UJIAN ONLINE SMK</h1>
-    <div class="subtitle">Tahun Ajaran 2024/2025 | Lockdown Mode</div>
+<div id="app">
+  <!-- LOGIN PAGE -->
+  <div id="loginPage" class="login-page">
+    <div class="login-card">
+      <h1>📚 UJIAN ONLINE SMK</h1>
+      <div class="sub">Pilih Role Login</div>
+      
+      <div class="role-buttons">
+        <div class="role-btn learnid" onclick="selectRole('learn')">
+          <i>🎓</i>
+          <div class="role-title">LearnID</div>
+          <div class="role-desc">Siswa / Peserta Ujian</div>
+        </div>
+        <div class="role-btn teachid" onclick="selectRole('teach')">
+          <i>👨‍🏫</i>
+          <div class="role-title">TeachID</div>
+          <div class="role-desc">Guru / Pengelola Soal</div>
+        </div>
+      </div>
+      
+      <div id="loginInput" class="login-input">
+        <input type="text" id="loginNama" placeholder="Masukkan Nama Lengkap">
+        <input type="text" id="loginKelas" placeholder="Kelas (untuk siswa)">
+        <button class="login-btn" onclick="prosesLogin()">Login</button>
+      </div>
+    </div>
   </div>
   
-  <!-- Info Siswa -->
-  <div class="info-siswa">
-    <p>👤 Nama: <span id="namaSiswa">-</span></p>
-    <p>📚 Kelas: <span id="kelasSiswa">-</span></p>
-    <p>📝 Mata Pelajaran: <span>Ujian Sekolah</span></p>
-  </div>
-  
-  <div class="timer-box">
-    <div class="timer" id="timer">90:00</div>
-    <div class="timer-label">Sisa Waktu Ujian</div>
-  </div>
-  
-  <div id="soalContainer"></div>
-  
-  <div class="nav-buttons">
-    <button id="prevBtn">◀ Sebelumnya</button>
-    <button id="nextBtn" class="primary">Selanjutnya ▶</button>
-  </div>
-  
-  <div class="progress" id="progress"></div>
-  
-  <button id="submitBtn" class="danger">📤 SUBMIT UJIAN 📤</button>
-</div>
-
-<!-- Modal Peringatan -->
-<div id="warningModal" class="modal hidden">
-  <div class="modal-content">
-    <h2>⚠️ PERINGATAN ⚠️</h2>
-    <p>Jangan keluar dari aplikasi ujian sebelum selesai!</p>
-    <p>Hal ini akan tercatat sebagai kecurangan.</p>
-    <button id="closeModalBtn" style="background: #ffaa44; color: #1a1a1a; margin-top: 10px;">Kembali ke Ujian</button>
-  </div>
+  <!-- MAIN APP (akan diisi oleh JS) -->
+  <div id="mainApp" style="display: none;"></div>
 </div>
 
 <script>
-  // ========== DATA SOAL (BISA DIEDIT SESUAI MAPEL) ==========
-  const soalData = [
-    {
-      text: "Apa kepanjangan dari SMK?",
-      options: ["Sekolah Menengah Kejuruan", "Sekolah Menengah Karir", "Sekolah Menengah Kreatif", "Sekolah Menengah Kompeten"]
-    },
-    {
-      text: "Berapa nilai minimal KKM (Kriteria Ketuntasan Minimal) umumnya?",
-      options: ["60", "65", "70", "75"]
-    },
-    {
-      text: "Apa itu Ujian Sekolah?",
-      options: ["Ujian yang diselenggarakan oleh sekolah", "Ujian nasional", "Ujian masuk PTN", "Ujian praktek saja"]
-    },
-    {
-      text: "Siapa yang bertanggung jawab atas pelaksanaan ujian sekolah?",
-      options: ["Kepala Sekolah", "Guru Mata Pelajaran", "Dinas Pendidikan", "Semua benar"]
-    },
-    {
-      text: "Apa tujuan utama ujian sekolah?",
-      options: ["Mengukur pencapaian kompetensi siswa", "Membuat siswa stres", "Mengisi waktu", "Menaikkan gaji guru"]
-    },
-    {
-      text: "Berapa jam durasi ujian biasanya?",
-      options: ["60 menit", "90 menit", "120 menit", "Tergantung mapel"]
-    }
+  // ========== DATA SOAL DEFAULT ==========
+  let soalData = [
+    { text: "Apa kepanjangan dari SMK?", options: ["Sekolah Menengah Kejuruan", "Sekolah Menengah Karir", "Sekolah Menengah Kreatif", "Sekolah Menengah Kompeten"] },
+    { text: "Berapa nilai minimal KKM (Kriteria Ketuntasan Minimal) umumnya?", options: ["60", "65", "70", "75"] },
+    { text: "Apa itu Ujian Sekolah?", options: ["Ujian yang diselenggarakan oleh sekolah", "Ujian nasional", "Ujian masuk PTN", "Ujian praktek saja"] },
+    { text: "Siapa yang bertanggung jawab atas pelaksanaan ujian sekolah?", options: ["Kepala Sekolah", "Guru Mata Pelajaran", "Dinas Pendidikan", "Semua benar"] },
+    { text: "Apa tujuan utama ujian sekolah?", options: ["Mengukur pencapaian kompetensi siswa", "Membuat siswa stres", "Mengisi waktu", "Menaikkan gaji guru"] }
   ];
   
-  let jawabanUser = new Array(soalData.length).fill(null);
+  let currentRole = null;
+  let currentUser = null;
+  
+  // Kunci jawaban (index 0 untuk semua)
+  const kunciJawaban = [0, 0, 0, 0, 0];
+  
+  // ========== FUNGSI LOGIN ==========
+  function selectRole(role) {
+    currentRole = role;
+    const loginInput = document.getElementById('loginInput');
+    const kelasInput = document.getElementById('loginKelas');
+    
+    if (role === 'learn') {
+      kelasInput.style.display = 'block';
+      kelasInput.placeholder = "Kelas (contoh: XII RPL 1)";
+    } else {
+      kelasInput.style.display = 'none';
+    }
+    
+    loginInput.style.display = 'block';
+  }
+  
+  function prosesLogin() {
+    const nama = document.getElementById('loginNama').value.trim();
+    const kelas = document.getElementById('loginKelas').value.trim();
+    
+    if (!nama) {
+      alert("Masukkan nama lengkap!");
+      return;
+    }
+    
+    if (currentRole === 'learn' && !kelas) {
+      alert("Masukkan kelas!");
+      return;
+    }
+    
+    currentUser = { nama, kelas, role: currentRole };
+    
+    if (currentRole === 'learn') {
+      startStudentExam();
+    } else {
+      startTeacherDashboard();
+    }
+  }
+  
+  // ========== MODE LEARNID (SISWA) ==========
+  let jawabanUser = [];
   let currentIndex = 0;
-  let timerSeconds = 90 * 60; // 90 menit default, bisa diubah
+  let timerSeconds = 90 * 60;
   let timerInterval = null;
   let examSubmitted = false;
   
-  // ========== DATA SISWA (BISA DARI URL ATAU INPUT NANTI) ==========
-  // Ambil dari URL parameter atau prompt
-  const urlParams = new URLSearchParams(window.location.search);
-  let namaSiswa = urlParams.get('nama') || prompt("Masukkan Nama Lengkap Anda:", "Ahmad Rizki");
-  let kelasSiswa = urlParams.get('kelas') || prompt("Masukkan Kelas:", "XII RPL 1");
+  function startStudentExam() {
+    // Reset data ujian
+    jawabanUser = new Array(soalData.length).fill(null);
+    currentIndex = 0;
+    timerSeconds = 90 * 60;
+    examSubmitted = false;
+    
+    document.getElementById('loginPage').style.display = 'none';
+    const mainApp = document.getElementById('mainApp');
+    
+    mainApp.innerHTML = `
+      <div class="lockdown-bar">🔒 LOCKDOWN MODE AKTIF 🔒 | UJIAN ONLINE SMK | DILARANG KELUAR APLIKASI</div>
+      <div class="container">
+        <div class="header">
+          <h1>📝 UJIAN ONLINE SMK</h1>
+          <div class="subtitle">Mode: LearnID (Siswa)</div>
+        </div>
+        
+        <div class="info-siswa">
+          <p>👤 Nama: <span>${currentUser.nama}</span></p>
+          <p>📚 Kelas: <span>${currentUser.kelas}</span></p>
+        </div>
+        
+        <div class="timer-box">
+          <div class="timer" id="timer">90:00</div>
+          <div class="timer-label">Sisa Waktu Ujian</div>
+        </div>
+        
+        <div id="soalContainer"></div>
+        
+        <div class="nav-buttons">
+          <button id="prevBtn">◀ Sebelumnya</button>
+          <button id="nextBtn" class="primary">Selanjutnya ▶</button>
+        </div>
+        
+        <div class="progress" id="progress"></div>
+        <button id="submitBtn" class="danger" style="margin-top: 20px;">📤 SUBMIT UJIAN 📤</button>
+      </div>
+    `;
+    
+    mainApp.style.display = 'block';
+    
+    // Lockdown functions
+    window.history.pushState(null, null, location.href);
+    window.addEventListener('popstate', function() { if (!examSubmitted) showStudentWarning(); window.history.pushState(null, null, location.href); });
+    document.addEventListener('contextmenu', (e) => e.preventDefault());
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J')) || (e.ctrlKey && e.key === 'u')) {
+        e.preventDefault();
+        showStudentWarning();
+      }
+    });
+    
+    renderStudentSoal();
+    startStudentTimer();
+    
+    document.getElementById('prevBtn').addEventListener('click', () => { if (currentIndex > 0) { currentIndex--; renderStudentSoal(); } });
+    document.getElementById('nextBtn').addEventListener('click', () => { if (currentIndex < soalData.length - 1) { currentIndex++; renderStudentSoal(); } });
+    document.getElementById('submitBtn').addEventListener('click', () => submitStudentExam());
+  }
   
-  if (!namaSiswa) namaSiswa = "Peserta Ujian";
-  if (!kelasSiswa) kelasSiswa = "XII";
-  
-  document.getElementById('namaSiswa').innerText = namaSiswa;
-  document.getElementById('kelasSiswa').innerText = kelasSiswa;
-  
-  // ========== LOCKDOWN FUNCTIONS ==========
-  function showWarning() {
-    const modal = document.getElementById('warningModal');
+  function showStudentWarning() {
+    let modal = document.getElementById('warningModal');
+    if (!modal) {
+      modal = document.createElement('div');
+      modal.id = 'warningModal';
+      modal.className = 'modal';
+      modal.innerHTML = `<div class="modal-content"><h2>⚠️ PERINGATAN ⚠️</h2><p>Jangan keluar dari ujian sebelum selesai!</p><button onclick="document.getElementById('warningModal').classList.add('hidden')">Kembali ke Ujian</button></div>`;
+      document.body.appendChild(modal);
+    }
     modal.classList.remove('hidden');
   }
   
-  function hideWarning() {
-    const modal = document.getElementById('warningModal');
-    modal.classList.add('hidden');
-  }
-  
-  // Blok tombol back di browser
-  window.history.pushState(null, null, location.href);
-  window.addEventListener('popstate', function () {
-    if (!examSubmitted) {
-      showWarning();
-      window.history.pushState(null, null, location.href);
-    }
-  });
-  
-  // Deteksi keluar tab / pindah aplikasi
-  document.addEventListener('visibilitychange', () => {
-    if (document.hidden && !examSubmitted) {
-      showWarning();
-      // Catat kecurangan (opsional kirim ke Telegram)
-      console.warn("Siswa mencoba keluar dari ujian!");
-    }
-  });
-  
-  // Blok klik kanan
-  document.addEventListener('contextmenu', (e) => e.preventDefault());
-  
-  // Blok kombinasi keyboard developer tools
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'F12' || 
-        (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J')) || 
-        (e.ctrlKey && e.key === 'u') ||
-        (e.ctrlKey && e.key === 's')) {
-      e.preventDefault();
-      showWarning();
-      return false;
-    }
-  });
-  
-  // ========== FUNGSI RENDER SOAL ==========
-  function renderSoal() {
+  function renderStudentSoal() {
     const container = document.getElementById('soalContainer');
     const soal = soalData[currentIndex];
     const jawaban = jawabanUser[currentIndex];
@@ -438,7 +431,6 @@
       <div class="soal-card">
         <div class="soal-header">
           <div class="soal-num">Soal ${currentIndex + 1}</div>
-          <div class="soal-point">Bobot: 10 poin</div>
         </div>
         <div class="soal-text">${soal.text}</div>
         <div class="options">
@@ -455,151 +447,149 @@
     document.querySelectorAll('.option').forEach(opt => {
       opt.addEventListener('click', () => {
         jawabanUser[currentIndex] = parseInt(opt.dataset.optIndex);
-        renderSoal();
-        // Auto save ke localStorage
-        localStorage.setItem('ujian_jawaban', JSON.stringify(jawabanUser));
-        localStorage.setItem('ujian_index', currentIndex);
+        renderStudentSoal();
       });
     });
     
     const answeredCount = jawabanUser.filter(j => j !== null).length;
-    document.getElementById('progress').innerHTML = `📝 Terjawab: ${answeredCount} / ${soalData.length} soal | ⭐ ${Math.round((answeredCount/soalData.length)*100)}% selesai`;
+    document.getElementById('progress').innerHTML = `📝 Terjawab: ${answeredCount} / ${soalData.length} soal`;
   }
   
-  function prevSoal() {
-    if (currentIndex > 0) {
-      currentIndex--;
-      renderSoal();
-      localStorage.setItem('ujian_index', currentIndex);
-    }
-  }
-  
-  function nextSoal() {
-    if (currentIndex < soalData.length - 1) {
-      currentIndex++;
-      renderSoal();
-      localStorage.setItem('ujian_index', currentIndex);
-    }
-  }
-  
-  // ========== TIMER ==========
-  function updateTimerDisplay() {
-    const minutes = Math.floor(timerSeconds / 60);
-    const seconds = timerSeconds % 60;
-    document.getElementById('timer').innerText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-    
-    if (timerSeconds <= 0 && !examSubmitted) {
-      clearInterval(timerInterval);
-      alert("⏰ WAKTU HABIS! Ujian akan disubmit otomatis.");
-      submitExam();
-    }
-  }
-  
-  function startTimer() {
+  function startStudentTimer() {
+    if (timerInterval) clearInterval(timerInterval);
     timerInterval = setInterval(() => {
-      if (!examSubmitted) {
+      if (!examSubmitted && timerSeconds > 0) {
         timerSeconds--;
-        updateTimerDisplay();
-        localStorage.setItem('ujian_sisa_waktu', timerSeconds);
+        const minutes = Math.floor(timerSeconds / 60);
+        const seconds = timerSeconds % 60;
+        document.getElementById('timer').innerText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        if (timerSeconds === 0) submitStudentExam();
       }
     }, 1000);
   }
   
-  // ========== SUBMIT UJIAN ==========
-  function hitungSkor() {
-    // Contoh kunci jawaban (index 0 untuk semua soal, bisa disesuaikan)
-    const kunciJawaban = [0, 0, 0, 0, 0, 0];
-    let score = 0;
-    jawabanUser.forEach((jawab, idx) => {
-      if (jawab !== null && jawab === kunciJawaban[idx]) score++;
-    });
-    return score;
-  }
-  
-  async function submitExam() {
+  function submitStudentExam() {
     if (examSubmitted) return;
-    
     const unanswered = jawabanUser.filter(j => j === null).length;
     if (unanswered > 0) {
-      alert(`⚠️ Masih ada ${unanswered} soal yang belum dijawab! Selesaikan dulu.`);
+      alert(`⚠️ Masih ada ${unanswered} soal yang belum dijawab!`);
       return;
     }
     
     examSubmitted = true;
     clearInterval(timerInterval);
     
-    const score = hitungSkor();
-    const total = soalData.length;
-    const nilai = Math.round((score / total) * 100);
+    let score = 0;
+    jawabanUser.forEach((jawab, idx) => { if (jawab === kunciJawaban[idx]) score++; });
+    const nilai = Math.round((score / soalData.length) * 100);
     
-    // Tampilkan hasil
     document.getElementById('soalContainer').innerHTML = `
       <div class="result-card">
         <h2>🎉 UJIAN SELESAI 🎉</h2>
         <div class="nilai-besar">${nilai}%</div>
-        <p>Skor: ${score} / ${total}</p>
-        <p>Nilai: ${nilai}</p>
-        <p style="margin-top: 20px; color: #ffaa44;">${nilai >= 75 ? '✅ LULUS' : '❌ TIDAK LULUS'}</p>
-        <hr style="margin: 20px 0; border-color: #333;">
-        <p style="font-size: 0.8rem;">Terima kasih telah mengikuti ujian.<br>Hasil akan dikirim ke guru pengajar.</p>
+        <p>Skor: ${score} / ${soalData.length}</p>
+        <p>${nilai >= 75 ? '✅ LULUS' : '❌ TIDAK LULUS'}</p>
       </div>
     `;
     document.querySelector('.nav-buttons').style.display = 'none';
     document.getElementById('submitBtn').style.display = 'none';
     document.querySelector('.timer-box').style.display = 'none';
     
-    // Kirim hasil ke Telegram / Spreadsheet
-    await kirimKeTelegram({ nama: namaSiswa, kelas: kelasSiswa, nilai: nilai, score: score, total: total });
+    // Kirim ke Telegram
+    kirimKeTelegram({ nama: currentUser.nama, kelas: currentUser.kelas, nilai, score, total: soalData.length });
   }
   
-  // ========== KIRIM KE TELEGRAM ==========
-  const BOT_TOKEN = "8743858038:AAHr-VAbGCphu9uy584HPG6GunbdFG3AjE8";
-  const CHAT_ID = "7509845641";
-  
-  async function kirimKeTelegram(data) {
-    const pesan = `📢 **HASIL UJIAN ONLINE SMK** 📢\n\n👤 Nama: ${data.nama}\n📚 Kelas: ${data.kelas}\n📝 Skor: ${data.score}/${data.total}\n⭐ Nilai: ${data.nilai}%\n🏆 Status: ${data.nilai >= 75 ? 'LULUS ✅' : 'TIDAK LULUS ❌'}\n⏰ Waktu: ${new Date().toLocaleString()}`;
+  // ========== MODE TEACHID (GURU) ==========
+  function startTeacherDashboard() {
+    document.getElementById('loginPage').style.display = 'none';
+    const mainApp = document.getElementById('mainApp');
     
-    const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
-    try {
-      await fetch(url, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ chat_id: CHAT_ID, text: pesan, parse_mode: 'Markdown' })
-      });
-    } catch(e) {
-      console.log("Gagal kirim ke Telegram:", e);
+    mainApp.innerHTML = `
+      <div class="container">
+        <div class="dashboard-header">
+          <h1>👨‍🏫 DASHBOARD GURU</h1>
+          <div style="display: flex; gap: 10px;">
+            <button class="btn-tambah" id="tambahSoalBtn">+ Tambah Soal</button>
+            <button class="btn-logout" id="logoutBtn">Logout</button>
+          </div>
+        </div>
+        <div style="background: #1a1f2e; border-radius: 16px; padding: 15px; margin-bottom: 20px;">
+          <p>👤 Guru: <strong>${currentUser.nama}</strong></p>
+          <p>📋 Total Soal: <strong id="totalSoal">${soalData.length}</strong> soal</p>
+          <p>🎯 Mode: <strong style="color: #ffaa44;">EDIT & KELOLA SOAL</strong></p>
+        </div>
+        <div id="soalList" class="soal-list"></div>
+      </div>
+    `;
+    
+    mainApp.style.display = 'block';
+    renderSoalList();
+    
+    document.getElementById('tambahSoalBtn').addEventListener('click', showTambahSoalModal);
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+      location.reload();
+    });
+  }
+  
+  function renderSoalList() {
+    const container = document.getElementById('soalList');
+    if (!container) return;
+    
+    container.innerHTML = soalData.map((soal, idx) => `
+      <div class="soal-item" data-idx="${idx}">
+        <div class="soal-item-header">
+          <span class="soal-num">Soal ${idx + 1}</span>
+          <div class="soal-actions">
+            <button class="btn-edit" onclick="editSoal(${idx})">✏️ Edit</button>
+            <button class="btn-delete" onclick="hapusSoal(${idx})">🗑️ Hapus</button>
+          </div>
+        </div>
+        <div class="soal-item-text">📖 ${soal.text}</div>
+        <div class="soal-item-options">
+          A. ${soal.options[0]}<br>
+          B. ${soal.options[1]}<br>
+          C. ${soal.options[2]}<br>
+          D. ${soal.options[3]}
+        </div>
+      </div>
+    `).join('');
+    
+    document.getElementById('totalSoal').innerText = soalData.length;
+  }
+  
+  function editSoal(idx) {
+    const soal = soalData[idx];
+    const newText = prompt("Edit soal:", soal.text);
+    if (newText && newText.trim()) {
+      soalData[idx].text = newText.trim();
+      
+      const newOptA = prompt("Option A:", soal.options[0]);
+      const newOptB = prompt("Option B:", soal.options[1]);
+      const newOptC = prompt("Option C:", soal.options[2]);
+      const newOptD = prompt("Option D:", soal.options[3]);
+      
+      if (newOptA) soalData[idx].options[0] = newOptA;
+      if (newOptB) soalData[idx].options[1] = newOptB;
+      if (newOptC) soalData[idx].options[2] = newOptC;
+      if (newOptD) soalData[idx].options[3] = newOptD;
+      
+      renderSoalList();
+      alert("✅ Soal berhasil diedit!");
     }
   }
   
-  // ========== LOAD SAVED PROGRESS ==========
-  function loadSavedProgress() {
-    const savedJawaban = localStorage.getItem('ujian_jawaban');
-    const savedIndex = localStorage.getItem('ujian_index');
-    const savedWaktu = localStorage.getItem('ujian_sisa_waktu');
-    
-    if (savedJawaban) {
-      try {
-        const parsed = JSON.parse(savedJawaban);
-        if (parsed.length === soalData.length) jawabanUser = parsed;
-      } catch(e) {}
+  function hapusSoal(idx) {
+    if (confirm(`Hapus soal "${soalData[idx].text}"?`)) {
+      soalData.splice(idx, 1);
+      renderSoalList();
+      alert("✅ Soal berhasil dihapus!");
     }
-    if (savedIndex && parseInt(savedIndex) < soalData.length) currentIndex = parseInt(savedIndex);
-    if (savedWaktu && parseInt(savedWaktu) > 0 && parseInt(savedWaktu) < timerSeconds) timerSeconds = parseInt(savedWaktu);
   }
   
-  // ========== INIT ==========
-  function init() {
-    loadSavedProgress();
-    renderSoal();
-    startTimer();
+  function showTambahSoalModal() {
+    const text = prompt("Masukkan teks soal:");
+    if (!text) return;
     
-    document.getElementById('prevBtn').addEventListener('click', prevSoal);
-    document.getElementById('nextBtn').addEventListener('click', nextSoal);
-    document.getElementById('submitBtn').addEventListener('click', submitExam);
-    document.getElementById('closeModalBtn').addEventListener('click', hideWarning);
-  }
-  
-  init();
-</script>
-</body>
-</html>
+    const optA = prompt("Option A:");
+    const optB = prompt("Option B:");
+    const optC = prompt("Option
