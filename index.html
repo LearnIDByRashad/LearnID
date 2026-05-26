@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <title>🔒 MAE EXAM | Lockdown Mode</title>
+  <title>🔒 UJIAN ONLINE SMK | Lockdown Mode</title>
   <style>
     * {
       margin: 0;
@@ -14,37 +14,74 @@
     }
     
     body {
-      font-family: 'Poppins', monospace;
-      background: #0a0a0a;
-      color: white;
+      font-family: 'Poppins', 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: linear-gradient(135deg, #0a0f1a 0%, #0a0a0f 100%);
+      color: #e0e0e0;
       min-height: 100vh;
       overflow-x: hidden;
     }
     
-    /* Lockdown warning */
-    .lockdown-warning {
-      background: #ff0000aa;
+    /* LOCKDOWN WARNING BAR */
+    .lockdown-bar {
+      background: #dc2626;
       color: white;
       text-align: center;
       padding: 8px;
       font-size: 12px;
       font-weight: bold;
       letter-spacing: 1px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
     }
     
     .container {
       max-width: 800px;
       margin: 0 auto;
-      padding: 20px;
+      padding: 20px 16px 40px;
     }
     
+    /* Header & Info Siswa */
     .header {
       text-align: center;
       margin-bottom: 20px;
     }
     
+    .header h1 {
+      font-size: 1.5rem;
+      background: linear-gradient(135deg, #ffffff, #a0a0a0);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      margin-bottom: 5px;
+    }
+    
+    .subtitle {
+      font-size: 0.75rem;
+      color: #888;
+    }
+    
+    .info-siswa {
+      background: #1a1f2e;
+      border-radius: 16px;
+      padding: 12px 16px;
+      margin-bottom: 20px;
+      border: 1px solid #2a3040;
+    }
+    
+    .info-siswa p {
+      font-size: 0.85rem;
+      margin: 4px 0;
+    }
+    
+    .info-siswa span {
+      color: #ffaa44;
+      font-weight: bold;
+    }
+    
+    /* Timer */
     .timer-box {
-      background: #1a1a1a;
+      background: #1a1f2e;
       border: 2px solid #ff4444;
       border-radius: 60px;
       padding: 12px 20px;
@@ -55,7 +92,7 @@
     .timer {
       font-size: 2.5rem;
       font-weight: bold;
-      font-family: monospace;
+      font-family: 'Courier New', monospace;
       color: #ff4444;
     }
     
@@ -64,26 +101,44 @@
       color: #888;
     }
     
+    /* Soal Card */
     .soal-card {
-      background: #111;
+      background: #11151f;
       border-radius: 20px;
       padding: 20px;
       margin-bottom: 20px;
-      border: 1px solid #333;
+      border: 1px solid #2a3040;
+    }
+    
+    .soal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
     }
     
     .soal-num {
       font-size: 0.8rem;
-      color: #ffaa00;
-      margin-bottom: 10px;
+      background: #ffaa44;
+      color: #1a1a1a;
+      padding: 4px 12px;
+      border-radius: 30px;
+      font-weight: bold;
+    }
+    
+    .soal-point {
+      font-size: 0.7rem;
+      color: #888;
     }
     
     .soal-text {
       font-size: 1rem;
       margin-bottom: 20px;
       line-height: 1.5;
+      font-weight: 500;
     }
     
+    /* Options */
     .options {
       display: flex;
       flex-direction: column;
@@ -91,8 +146,8 @@
     }
     
     .option {
-      background: #1a1a1a;
-      border: 1px solid #333;
+      background: #1a1f2e;
+      border: 1px solid #2a3040;
       border-radius: 50px;
       padding: 12px 18px;
       cursor: pointer;
@@ -103,26 +158,29 @@
     }
     
     .option:hover {
-      background: #252525;
-      border-color: #ffaa00;
+      background: #222838;
+      border-color: #ffaa44;
     }
     
     .option.selected {
-      background: #2a2a2a;
-      border-color: #ffaa00;
-      box-shadow: 0 0 8px rgba(255,170,0,0.3);
+      background: #2a3045;
+      border-color: #ffaa44;
+      box-shadow: 0 0 8px rgba(255,170,68,0.3);
     }
     
     .option-letter {
       font-weight: bold;
-      color: #ffaa00;
-      width: 30px;
+      color: #ffaa44;
+      width: 28px;
+      font-size: 1rem;
     }
     
     .option-text {
       flex: 1;
+      font-size: 0.9rem;
     }
     
+    /* Navigation */
     .nav-buttons {
       display: flex;
       justify-content: space-between;
@@ -131,41 +189,43 @@
     }
     
     button {
-      background: #333;
+      background: #2a3040;
       border: none;
-      padding: 14px 24px;
+      padding: 12px 20px;
       border-radius: 50px;
       color: white;
       font-weight: bold;
       cursor: pointer;
       transition: 0.2s;
       flex: 1;
+      font-size: 0.9rem;
     }
     
     button:hover {
-      background: #444;
+      background: #3a4055;
     }
     
     button.primary {
-      background: #ffaa00;
+      background: #ffaa44;
       color: #1a1a1a;
     }
     
     button.primary:hover {
-      background: #ffcc44;
+      background: #ffcc66;
     }
     
     button.danger {
-      background: #ff4444;
+      background: #dc2626;
     }
     
     .progress {
       text-align: center;
       margin-top: 15px;
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       color: #888;
     }
     
+    /* Modal Peringatan */
     .modal {
       position: fixed;
       top: 0;
@@ -181,135 +241,153 @@
     }
     
     .modal-content {
-      background: #1a1a1a;
-      border-radius: 30px;
+      background: #1a1f2e;
+      border-radius: 24px;
       padding: 30px;
       text-align: center;
       max-width: 300px;
-      border: 1px solid #ffaa00;
+      border: 1px solid #ffaa44;
+    }
+    
+    .modal-content h2 {
+      color: #ffaa44;
+      margin-bottom: 15px;
+    }
+    
+    .modal-content p {
+      margin-bottom: 20px;
+      font-size: 0.9rem;
     }
     
     .hidden {
       display: none;
     }
     
+    /* Hasil Ujian */
+    .result-card {
+      background: #11151f;
+      border-radius: 24px;
+      padding: 30px;
+      text-align: center;
+      border: 1px solid #ffaa44;
+    }
+    
+    .result-card h2 {
+      color: #ffaa44;
+      margin-bottom: 20px;
+    }
+    
+    .nilai-besar {
+      font-size: 3rem;
+      font-weight: bold;
+      margin: 20px 0;
+    }
+    
     @media (max-width: 600px) {
       .container { padding: 15px; }
       .timer { font-size: 1.8rem; }
       .option { padding: 10px 14px; }
+      .soal-text { font-size: 0.9rem; }
     }
   </style>
 </head>
 <body>
 
-<div class="lockdown-warning">
-  🔒 LOCKDOWN MODE AKTIF 🔒 | JANGAN KELUAR APLIKASI SEBELUM UJIAN SELESAI
+<div class="lockdown-bar">
+  🔒 LOCKDOWN MODE AKTIF 🔒 | UJIAN ONLINE SMK | DILARANG KELUAR APLIKASI
 </div>
 
 <div class="container" id="appContainer">
   <div class="header">
-    <h1>⚡ MAE EXAM ⚡</h1>
-    <p>Seleksi Marga | Lockdown Mode</p>
+    <h1>📝 UJIAN ONLINE SMK</h1>
+    <div class="subtitle">Tahun Ajaran 2024/2025 | Lockdown Mode</div>
+  </div>
+  
+  <!-- Info Siswa -->
+  <div class="info-siswa">
+    <p>👤 Nama: <span id="namaSiswa">-</span></p>
+    <p>📚 Kelas: <span id="kelasSiswa">-</span></p>
+    <p>📝 Mata Pelajaran: <span>Ujian Sekolah</span></p>
   </div>
   
   <div class="timer-box">
-    <div class="timer" id="timer">30:00</div>
-    <div class="timer-label">Sisa Waktu</div>
+    <div class="timer" id="timer">90:00</div>
+    <div class="timer-label">Sisa Waktu Ujian</div>
   </div>
   
   <div id="soalContainer"></div>
   
   <div class="nav-buttons">
-    <button id="prevBtn" class="secondary">◀ Sebelumnya</button>
+    <button id="prevBtn">◀ Sebelumnya</button>
     <button id="nextBtn" class="primary">Selanjutnya ▶</button>
   </div>
   
   <div class="progress" id="progress"></div>
   
-  <button id="submitBtn" style="margin-top: 20px; background: #ff4444;">✍️ SUBMIT UJIAN ✍️</button>
+  <button id="submitBtn" class="danger">📤 SUBMIT UJIAN 📤</button>
 </div>
 
 <!-- Modal Peringatan -->
 <div id="warningModal" class="modal hidden">
   <div class="modal-content">
-    <h2 style="color: #ffaa00;">⚠️ PERINGATAN ⚠️</h2>
-    <p style="margin: 15px 0;">Jangan keluar dari aplikasi sebelum ujian selesai!</p>
-    <button id="closeModalBtn" style="background: #ffaa00; color: #1a1a1a;">Kembali ke Ujian</button>
+    <h2>⚠️ PERINGATAN ⚠️</h2>
+    <p>Jangan keluar dari aplikasi ujian sebelum selesai!</p>
+    <p>Hal ini akan tercatat sebagai kecurangan.</p>
+    <button id="closeModalBtn" style="background: #ffaa44; color: #1a1a1a; margin-top: 10px;">Kembali ke Ujian</button>
   </div>
 </div>
 
 <script>
-  // ========== DATA SOAL CONTOH ==========
+  // ========== DATA SOAL (BISA DIEDIT SESUAI MAPEL) ==========
   const soalData = [
     {
-      text: "Apa motto utama MAE Selection?",
-      options: ["Darah pemberani tak pernah mati", "Menang atau kalah", "Bersatu kita teguh", "Pantang menyerah"]
+      text: "Apa kepanjangan dari SMK?",
+      options: ["Sekolah Menengah Kejuruan", "Sekolah Menengah Karir", "Sekolah Menengah Kreatif", "Sekolah Menengah Kompeten"]
     },
     {
-      text: "Siapa founder MAE Selection?",
-      options: ["Raul", "Yonz", "Novva", "Semua benar"]
+      text: "Berapa nilai minimal KKM (Kriteria Ketuntasan Minimal) umumnya?",
+      options: ["60", "65", "70", "75"]
     },
     {
-      text: "Tahun berapa MAE Selection berdiri?",
-      options: ["2019", "2020", "2021", "2022"]
+      text: "Apa itu Ujian Sekolah?",
+      options: ["Ujian yang diselenggarakan oleh sekolah", "Ujian nasional", "Ujian masuk PTN", "Ujian praktek saja"]
     },
     {
-      text: "Apa senjata utama MAE?",
-      options: ["Kebersamaan", "Kekuatan fisik", "Sihir", "Teknologi"]
+      text: "Siapa yang bertanggung jawab atas pelaksanaan ujian sekolah?",
+      options: ["Kepala Sekolah", "Guru Mata Pelajaran", "Dinas Pendidikan", "Semua benar"]
     },
     {
-      text: "Siapa yang bertanggung jawab sebagai Admin Marga?",
-      options: ["Raul, Yonz, Novva, Dimm, Kyy", "Hanya Raul", "Yonz dan Novva", "Semua anggota"]
+      text: "Apa tujuan utama ujian sekolah?",
+      options: ["Mengukur pencapaian kompetensi siswa", "Membuat siswa stres", "Mengisi waktu", "Menaikkan gaji guru"]
+    },
+    {
+      text: "Berapa jam durasi ujian biasanya?",
+      options: ["60 menit", "90 menit", "120 menit", "Tergantung mapel"]
     }
   ];
   
   let jawabanUser = new Array(soalData.length).fill(null);
   let currentIndex = 0;
-  let timerSeconds = 30 * 60; // 30 menit
+  let timerSeconds = 90 * 60; // 90 menit default, bisa diubah
   let timerInterval = null;
   let examSubmitted = false;
   
-  // ========== LOCKDOWN FUNCTIONS (Web Version) ==========
-  function blockContextMenu(e) {
-    e.preventDefault();
-    return false;
-  }
+  // ========== DATA SISWA (BISA DARI URL ATAU INPUT NANTI) ==========
+  // Ambil dari URL parameter atau prompt
+  const urlParams = new URLSearchParams(window.location.search);
+  let namaSiswa = urlParams.get('nama') || prompt("Masukkan Nama Lengkap Anda:", "Ahmad Rizki");
+  let kelasSiswa = urlParams.get('kelas') || prompt("Masukkan Kelas:", "XII RPL 1");
   
-  function blockDevTools() {
-    // Deteksi inspect element
-    document.addEventListener('contextmenu', blockContextMenu);
-    document.addEventListener('keydown', (e) => {
-      // Block F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U, Ctrl+S
-      if (e.key === 'F12' || 
-          (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J')) ||
-          (e.ctrlKey && (e.key === 'u' || e.key === 's'))) {
-        e.preventDefault();
-        showWarning();
-        return false;
-      }
-    });
-  }
+  if (!namaSiswa) namaSiswa = "Peserta Ujian";
+  if (!kelasSiswa) kelasSiswa = "XII";
   
-  function detectVisibilityChange() {
-    document.addEventListener('visibilitychange', () => {
-      if (document.hidden && !examSubmitted) {
-        showWarning();
-      }
-    });
-  }
+  document.getElementById('namaSiswa').innerText = namaSiswa;
+  document.getElementById('kelasSiswa').innerText = kelasSiswa;
   
-  function detectWindowBlur() {
-    window.addEventListener('blur', () => {
-      if (!examSubmitted) {
-        showWarning();
-      }
-    });
-  }
-  
+  // ========== LOCKDOWN FUNCTIONS ==========
   function showWarning() {
     const modal = document.getElementById('warningModal');
     modal.classList.remove('hidden');
-    // pause timer while warning?
   }
   
   function hideWarning() {
@@ -317,7 +395,40 @@
     modal.classList.add('hidden');
   }
   
-  // ========== RENDER SOAL ==========
+  // Blok tombol back di browser
+  window.history.pushState(null, null, location.href);
+  window.addEventListener('popstate', function () {
+    if (!examSubmitted) {
+      showWarning();
+      window.history.pushState(null, null, location.href);
+    }
+  });
+  
+  // Deteksi keluar tab / pindah aplikasi
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden && !examSubmitted) {
+      showWarning();
+      // Catat kecurangan (opsional kirim ke Telegram)
+      console.warn("Siswa mencoba keluar dari ujian!");
+    }
+  });
+  
+  // Blok klik kanan
+  document.addEventListener('contextmenu', (e) => e.preventDefault());
+  
+  // Blok kombinasi keyboard developer tools
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'F12' || 
+        (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J')) || 
+        (e.ctrlKey && e.key === 'u') ||
+        (e.ctrlKey && e.key === 's')) {
+      e.preventDefault();
+      showWarning();
+      return false;
+    }
+  });
+  
+  // ========== FUNGSI RENDER SOAL ==========
   function renderSoal() {
     const container = document.getElementById('soalContainer');
     const soal = soalData[currentIndex];
@@ -325,7 +436,10 @@
     
     container.innerHTML = `
       <div class="soal-card">
-        <div class="soal-num">Soal ${currentIndex + 1} dari ${soalData.length}</div>
+        <div class="soal-header">
+          <div class="soal-num">Soal ${currentIndex + 1}</div>
+          <div class="soal-point">Bobot: 10 poin</div>
+        </div>
         <div class="soal-text">${soal.text}</div>
         <div class="options">
           ${soal.options.map((opt, idx) => `
@@ -338,25 +452,25 @@
       </div>
     `;
     
-    // Pasang event click ke option
     document.querySelectorAll('.option').forEach(opt => {
-      opt.addEventListener('click', (e) => {
-        const optIndex = parseInt(opt.dataset.optIndex);
-        jawabanUser[currentIndex] = optIndex;
+      opt.addEventListener('click', () => {
+        jawabanUser[currentIndex] = parseInt(opt.dataset.optIndex);
         renderSoal();
+        // Auto save ke localStorage
+        localStorage.setItem('ujian_jawaban', JSON.stringify(jawabanUser));
+        localStorage.setItem('ujian_index', currentIndex);
       });
     });
     
-    // Update progress
     const answeredCount = jawabanUser.filter(j => j !== null).length;
-    document.getElementById('progress').innerHTML = `📝 Terjawab: ${answeredCount} / ${soalData.length} soal`;
+    document.getElementById('progress').innerHTML = `📝 Terjawab: ${answeredCount} / ${soalData.length} soal | ⭐ ${Math.round((answeredCount/soalData.length)*100)}% selesai`;
   }
   
-  // ========== NAVIGASI ==========
   function prevSoal() {
     if (currentIndex > 0) {
       currentIndex--;
       renderSoal();
+      localStorage.setItem('ujian_index', currentIndex);
     }
   }
   
@@ -364,6 +478,7 @@
     if (currentIndex < soalData.length - 1) {
       currentIndex++;
       renderSoal();
+      localStorage.setItem('ujian_index', currentIndex);
     }
   }
   
@@ -373,7 +488,7 @@
     const seconds = timerSeconds % 60;
     document.getElementById('timer').innerText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
     
-    if (timerSeconds <= 0) {
+    if (timerSeconds <= 0 && !examSubmitted) {
       clearInterval(timerInterval);
       alert("⏰ WAKTU HABIS! Ujian akan disubmit otomatis.");
       submitExam();
@@ -385,15 +500,25 @@
       if (!examSubmitted) {
         timerSeconds--;
         updateTimerDisplay();
+        localStorage.setItem('ujian_sisa_waktu', timerSeconds);
       }
     }, 1000);
   }
   
-  // ========== SUBMIT ==========
-  function submitExam() {
+  // ========== SUBMIT UJIAN ==========
+  function hitungSkor() {
+    // Contoh kunci jawaban (index 0 untuk semua soal, bisa disesuaikan)
+    const kunciJawaban = [0, 0, 0, 0, 0, 0];
+    let score = 0;
+    jawabanUser.forEach((jawab, idx) => {
+      if (jawab !== null && jawab === kunciJawaban[idx]) score++;
+    });
+    return score;
+  }
+  
+  async function submitExam() {
     if (examSubmitted) return;
     
-    // Cek apakah semua soal sudah dijawab
     const unanswered = jawabanUser.filter(j => j === null).length;
     if (unanswered > 0) {
       alert(`⚠️ Masih ada ${unanswered} soal yang belum dijawab! Selesaikan dulu.`);
@@ -403,41 +528,70 @@
     examSubmitted = true;
     clearInterval(timerInterval);
     
-    // Hitung skor
-    let score = 0;
-    jawabanUser.forEach((jawab, idx) => {
-      // Contoh kunci jawaban: semua jawaban benar adalah index 0
-      if (jawab === 0) score++;
-    });
-    
+    const score = hitungSkor();
     const total = soalData.length;
-    const nilai = (score / total) * 100;
-    
-    alert(`✅ Ujian Selesai!\nSkor: ${score}/${total}\nNilai: ${nilai}%`);
-    
-    // Kirim ke Telegram (opsional)
-    // sendToTelegram({ nama: "Peserta", nilai: nilai });
+    const nilai = Math.round((score / total) * 100);
     
     // Tampilkan hasil
     document.getElementById('soalContainer').innerHTML = `
-      <div class="soal-card" style="text-align: center;">
+      <div class="result-card">
         <h2>🎉 UJIAN SELESAI 🎉</h2>
-        <p style="font-size: 2rem; margin: 20px;">${nilai}%</p>
-        <p>Skor: ${score}/${total}</p>
-        <p style="margin-top: 20px;">Terima kasih telah mengikuti seleksi MAE!</p>
+        <div class="nilai-besar">${nilai}%</div>
+        <p>Skor: ${score} / ${total}</p>
+        <p>Nilai: ${nilai}</p>
+        <p style="margin-top: 20px; color: #ffaa44;">${nilai >= 75 ? '✅ LULUS' : '❌ TIDAK LULUS'}</p>
+        <hr style="margin: 20px 0; border-color: #333;">
+        <p style="font-size: 0.8rem;">Terima kasih telah mengikuti ujian.<br>Hasil akan dikirim ke guru pengajar.</p>
       </div>
     `;
     document.querySelector('.nav-buttons').style.display = 'none';
     document.getElementById('submitBtn').style.display = 'none';
+    document.querySelector('.timer-box').style.display = 'none';
+    
+    // Kirim hasil ke Telegram / Spreadsheet
+    await kirimKeTelegram({ nama: namaSiswa, kelas: kelasSiswa, nilai: nilai, score: score, total: total });
+  }
+  
+  // ========== KIRIM KE TELEGRAM ==========
+  const BOT_TOKEN = "8743858038:AAHr-VAbGCphu9uy584HPG6GunbdFG3AjE8";
+  const CHAT_ID = "7509845641";
+  
+  async function kirimKeTelegram(data) {
+    const pesan = `📢 **HASIL UJIAN ONLINE SMK** 📢\n\n👤 Nama: ${data.nama}\n📚 Kelas: ${data.kelas}\n📝 Skor: ${data.score}/${data.total}\n⭐ Nilai: ${data.nilai}%\n🏆 Status: ${data.nilai >= 75 ? 'LULUS ✅' : 'TIDAK LULUS ❌'}\n⏰ Waktu: ${new Date().toLocaleString()}`;
+    
+    const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
+    try {
+      await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ chat_id: CHAT_ID, text: pesan, parse_mode: 'Markdown' })
+      });
+    } catch(e) {
+      console.log("Gagal kirim ke Telegram:", e);
+    }
+  }
+  
+  // ========== LOAD SAVED PROGRESS ==========
+  function loadSavedProgress() {
+    const savedJawaban = localStorage.getItem('ujian_jawaban');
+    const savedIndex = localStorage.getItem('ujian_index');
+    const savedWaktu = localStorage.getItem('ujian_sisa_waktu');
+    
+    if (savedJawaban) {
+      try {
+        const parsed = JSON.parse(savedJawaban);
+        if (parsed.length === soalData.length) jawabanUser = parsed;
+      } catch(e) {}
+    }
+    if (savedIndex && parseInt(savedIndex) < soalData.length) currentIndex = parseInt(savedIndex);
+    if (savedWaktu && parseInt(savedWaktu) > 0 && parseInt(savedWaktu) < timerSeconds) timerSeconds = parseInt(savedWaktu);
   }
   
   // ========== INIT ==========
   function init() {
+    loadSavedProgress();
     renderSoal();
     startTimer();
-    blockDevTools();
-    detectVisibilityChange();
-    detectWindowBlur();
     
     document.getElementById('prevBtn').addEventListener('click', prevSoal);
     document.getElementById('nextBtn').addEventListener('click', nextSoal);
