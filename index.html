@@ -16,6 +16,50 @@
       background: linear-gradient(135deg, #0a0f1a 0%, #0a0a0f 100%);
       color: #e0e0e0;
       min-height: 100vh;
+      overflow-x: hidden;
+    }
+    
+    /* LOADING SCREEN */
+    .loading-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #0a0a0f;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      z-index: 9999;
+      transition: opacity 0.5s ease;
+    }
+    
+    .loading-screen .spinner {
+      width: 60px;
+      height: 60px;
+      border: 4px solid #2a3040;
+      border-top: 4px solid #ffaa44;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-bottom: 20px;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    .loading-screen p {
+      font-size: 1rem;
+      color: #ffaa44;
+      letter-spacing: 2px;
+    }
+    
+    .loading-screen .credit-load {
+      margin-top: 30px;
+      font-size: 0.7rem;
+      color: #555;
     }
     
     /* Login Page */
@@ -123,6 +167,13 @@
       border: none;
       cursor: pointer;
       font-size: 1rem;
+    }
+    
+    .credit-footer {
+      text-align: center;
+      margin-top: 30px;
+      font-size: 0.7rem;
+      color: #555;
     }
     
     /* Container */
@@ -277,6 +328,18 @@
       display: flex;
       justify-content: space-between;
       margin-bottom: 10px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    
+    .kunci-badge {
+      background: #ffaa4422;
+      border: 1px solid #ffaa44;
+      border-radius: 20px;
+      padding: 2px 10px;
+      font-size: 11px;
+      display: inline-block;
+      margin-top: 8px;
     }
     
     .result-card {
@@ -303,7 +366,15 @@
 </head>
 <body>
 
-<div id="app">
+<!-- LOADING SCREEN -->
+<div id="loadingScreen" class="loading-screen">
+  <div class="spinner"></div>
+  <p>⚡ SEDANG LOADING ⚡</p>
+  <p style="font-size: 0.7rem; margin-top: 5px;">harap tunggu sebentar...</p>
+  <div class="credit-load">© 2024 | Rashad Dev</div>
+</div>
+
+<div id="app" style="display: none;">
   <!-- LOGIN PAGE -->
   <div id="loginPage">
     <div class="login-page">
@@ -329,6 +400,10 @@
           <input type="text" id="kelasInput" placeholder="Kelas">
           <button id="submitLoginBtn" class="login-btn">Login</button>
         </div>
+        
+        <div class="credit-footer">
+          <i class="fas fa-code"></i> Dibuat oleh <strong>Rashad</strong> | SMK Developer
+        </div>
       </div>
     </div>
   </div>
@@ -338,16 +413,26 @@
 </div>
 
 <script>
-  // ========== DATA SOAL ==========
+  // ========== DATA SOAL & KUNCI JAWABAN ==========
   let soalData = [
-    { text: "Apa kepanjangan dari SMK?", options: ["Sekolah Menengah Kejuruan", "Sekolah Menengah Karir", "Sekolah Menengah Kreatif", "Sekolah Menengah Kompeten"] },
-    { text: "Berapa nilai minimal KKM umumnya?", options: ["60", "65", "70", "75"] },
-    { text: "Apa itu Ujian Sekolah?", options: ["Ujian yang diselenggarakan oleh sekolah", "Ujian nasional", "Ujian masuk PTN", "Ujian praktek saja"] },
-    { text: "Siapa yang bertanggung jawab atas ujian sekolah?", options: ["Kepala Sekolah", "Guru", "Dinas Pendidikan", "Semua benar"] },
-    { text: "Apa tujuan utama ujian sekolah?", options: ["Mengukur kompetensi siswa", "Membuat siswa stres", "Mengisi waktu", "Menaikkan gaji guru"] }
+    { text: "Apa kepanjangan dari SMK?", options: ["Sekolah Menengah Kejuruan", "Sekolah Menengah Karir", "Sekolah Menengah Kreatif", "Sekolah Menengah Kompeten"], kunci: 0 },
+    { text: "Berapa nilai minimal KKM umumnya?", options: ["60", "65", "70", "75"], kunci: 0 },
+    { text: "Apa itu Ujian Sekolah?", options: ["Ujian yang diselenggarakan oleh sekolah", "Ujian nasional", "Ujian masuk PTN", "Ujian praktek saja"], kunci: 0 },
+    { text: "Siapa yang bertanggung jawab atas ujian sekolah?", options: ["Kepala Sekolah", "Guru", "Dinas Pendidikan", "Semua benar"], kunci: 3 },
+    { text: "Apa tujuan utama ujian sekolah?", options: ["Mengukur kompetensi siswa", "Membuat siswa stres", "Mengisi waktu", "Menaikkan gaji guru"], kunci: 0 }
   ];
   
   let selectedRole = null;
+  
+  // ========== HILANGKAN LOADING ==========
+  setTimeout(() => {
+    const loadingScreen = document.getElementById('loadingScreen');
+    loadingScreen.style.opacity = '0';
+    setTimeout(() => {
+      loadingScreen.style.display = 'none';
+      document.getElementById('app').style.display = 'block';
+    }, 500);
+  }, 2000);
   
   // ========== DOM Elements ==========
   const learnBtn = document.getElementById('learnBtn');
@@ -441,6 +526,7 @@
         </div>
         <div class="progress" id="progressText"></div>
         <button id="submitUjianBtn" class="danger" style="margin-top: 20px;">📤 SUBMIT UJIAN</button>
+        <div class="credit-footer" style="margin-top: 20px;">© Dibuat oleh Rashad | SMK Dev</div>
       </div>
     `;
     
@@ -501,9 +587,18 @@
         const detik = waktu % 60;
         const timerDisplay = document.getElementById('timerDisplay');
         if (timerDisplay) timerDisplay.innerText = `${menit.toString().padStart(2, '0')}:${detik.toString().padStart(2, '0')}`;
-        if (waktu === 0) alert("WAKTU HABIS!");
+        if (waktu === 0) {
+          alert("WAKTU HABIS! Ujian akan disubmit otomatis.");
+          submitExamFromTimer();
+        }
       }
     }, 1000);
+  }
+  
+  function submitExamFromTimer() {
+    if (ujianSelesai) return;
+    const nama = document.querySelector('.info-siswa') ? ... : 'Siswa';
+    submitExam('Siswa', 'Kelas');
   }
   
   function submitExam(nama, kelas) {
@@ -516,8 +611,11 @@
     ujianSelesai = true;
     clearInterval(timerInterval);
     
+    // Hitung skor berdasarkan kunci jawaban dari soalData
     let score = 0;
-    jawaban.forEach((j, idx) => { if (j === 0) score++; });
+    jawaban.forEach((jawab, idx) => {
+      if (jawab === soalData[idx].kunci) score++;
+    });
     const nilai = Math.round((score / soalData.length) * 100);
     
     document.getElementById('soalContainer').innerHTML = `
@@ -528,9 +626,12 @@
         <p>${nilai >= 75 ? '✅ LULUS' : '❌ TIDAK LULUS'}</p>
       </div>
     `;
-    document.querySelector('.nav-buttons').style.display = 'none';
-    document.getElementById('submitUjianBtn').style.display = 'none';
-    document.querySelector('.timer-box').style.display = 'none';
+    const navButtons = document.querySelector('.nav-buttons');
+    if (navButtons) navButtons.style.display = 'none';
+    const submitBtn = document.getElementById('submitUjianBtn');
+    if (submitBtn) submitBtn.style.display = 'none';
+    const timerBox = document.querySelector('.timer-box');
+    if (timerBox) timerBox.style.display = 'none';
     
     // Kirim ke Telegram
     kirimTelegram(nama, kelas, score, nilai);
@@ -541,10 +642,6 @@
     document.getElementById('loginPage').style.display = 'none';
     const mainApp = document.getElementById('mainApp');
     
-    renderDashboardGuru(mainApp, nama);
-  }
-  
-  function renderDashboardGuru(mainApp, nama) {
     mainApp.innerHTML = `
       <div class="container">
         <div class="dashboard-header">
@@ -557,8 +654,10 @@
         <div style="background: #1a1f2e; border-radius: 16px; padding: 15px; margin-bottom: 20px;">
           <p>👤 Guru: <strong>${nama}</strong></p>
           <p>📋 Total Soal: <strong id="totalSoalCount">${soalData.length}</strong> soal</p>
+          <p style="margin-top: 5px; font-size: 12px; color: #ffaa44;">💡 Tips: Kunci jawaban bisa diubah saat edit soal</p>
         </div>
         <div id="soalListContainer" class="soal-list"></div>
+        <div class="credit-footer" style="margin-top: 30px;">© Dibuat oleh Rashad | SMK Dev</div>
       </div>
     `;
     
@@ -572,6 +671,8 @@
   function renderSoalList() {
     const container = document.getElementById('soalListContainer');
     if (!container) return;
+    
+    const optionLetters = ['A', 'B', 'C', 'D'];
     
     container.innerHTML = soalData.map((soal, idx) => `
       <div class="soal-item">
@@ -589,6 +690,9 @@
           C. ${soal.options[2]}<br>
           D. ${soal.options[3]}
         </div>
+        <div class="kunci-badge">
+          🔑 Kunci Jawaban: ${optionLetters[soal.kunci]} (${soal.options[soal.kunci]})
+        </div>
       </div>
     `).join('');
     
@@ -598,62 +702,10 @@
   
   window.editSoalFunc = function(idx) {
     const soal = soalData[idx];
+    const optionLetters = ['A', 'B', 'C', 'D'];
+    
     const newText = prompt("Edit soal:", soal.text);
     if (newText) soal.text = newText;
     
     const newA = prompt("Option A:", soal.options[0]);
-    const newB = prompt("Option B:", soal.options[1]);
-    const newC = prompt("Option C:", soal.options[2]);
-    const newD = prompt("Option D:", soal.options[3]);
-    
-    if (newA) soal.options[0] = newA;
-    if (newB) soal.options[1] = newB;
-    if (newC) soal.options[2] = newC;
-    if (newD) soal.options[3] = newD;
-    
-    renderSoalList();
-    alert("Soal berhasil diedit!");
-  };
-  
-  window.hapusSoalFunc = function(idx) {
-    if (confirm("Hapus soal ini?")) {
-      soalData.splice(idx, 1);
-      renderSoalList();
-      alert("Soal berhasil dihapus!");
-    }
-  };
-  
-  function tambahSoal() {
-    const text = prompt("Masukkan teks soal:");
-    if (!text) return;
-    
-    const a = prompt("Option A:");
-    const b = prompt("Option B:");
-    const c = prompt("Option C:");
-    const d = prompt("Option D:");
-    
-    if (a && b && c && d) {
-      soalData.push({ text, options: [a, b, c, d] });
-      renderSoalList();
-      alert("Soal berhasil ditambahkan!");
-    } else {
-      alert("Harap isi semua option!");
-    }
-  }
-  
-  // ========== TELEGRAM ==========
-  function kirimTelegram(nama, kelas, score, nilai) {
-    const pesan = `📢 HASIL UJIAN SMK\n\nNama: ${nama}\nKelas: ${kelas}\nSkor: ${score}/${soalData.length}\nNilai: ${nilai}%\nStatus: ${nilai >= 75 ? 'LULUS' : 'TIDAK LULUS'}`;
-    
-    fetch(`https://api.telegram.org/bot8743858038:AAHr-VAbGCphu9uy584HPG6GunbdFG3AjE8/sendMessage`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ chat_id: '7509845641', text: pesan })
-    }).catch(e => console.log("Telegram error:", e));
-  }
-  
-  // Blok klik kanan
-  document.addEventListener('contextmenu', (e) => e.preventDefault());
-</script>
-</body>
-</html>
+    const newB = pro
