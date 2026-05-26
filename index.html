@@ -9,22 +9,13 @@
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      user-select: none;
-      -webkit-tap-highlight-color: transparent;
     }
     
     body {
-      font-family: 'Poppins', 'Segoe UI', system-ui, -apple-system, sans-serif;
+      font-family: 'Poppins', 'Segoe UI', sans-serif;
       background: linear-gradient(135deg, #0a0f1a 0%, #0a0a0f 100%);
       color: #e0e0e0;
       min-height: 100vh;
-      overflow-x: hidden;
-    }
-    
-    .container {
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 20px 16px 40px;
     }
     
     /* Login Page */
@@ -83,30 +74,19 @@
       transform: translateY(-2px);
     }
     
-    .role-btn i {
-      font-size: 2rem;
-      margin-bottom: 8px;
-      display: block;
-    }
-    
-    .role-btn .role-title {
-      font-weight: bold;
-      font-size: 1.1rem;
-    }
-    
-    .role-btn .role-desc {
-      font-size: 0.7rem;
-      color: #888;
-      margin-top: 5px;
-    }
-    
-    .role-btn.learnid i { color: #44aaff; }
-    .role-btn.teachid i { color: #ffaa44; }
-    
     .role-btn.selected {
       border-color: #ffaa44;
       background: #2a3045;
     }
+    
+    .role-btn i {
+      font-size: 2rem;
+      display: block;
+      margin-bottom: 8px;
+    }
+    
+    .role-btn.learnid i { color: #44aaff; }
+    .role-btn.teachid i { color: #ffaa44; }
     
     .login-input {
       margin-top: 20px;
@@ -145,11 +125,13 @@
       font-size: 1rem;
     }
     
-    .login-btn:hover {
-      background: #ffcc66;
+    /* Container */
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
     }
     
-    /* Lockdown Bar */
     .lockdown-bar {
       background: #dc2626;
       color: white;
@@ -157,39 +139,100 @@
       padding: 8px;
       font-size: 12px;
       font-weight: bold;
-      position: sticky;
-      top: 0;
-      z-index: 100;
     }
     
-    .header { text-align: center; margin-bottom: 20px; }
-    .header h1 { font-size: 1.5rem; background: linear-gradient(135deg, #ffffff, #a0a0a0); background-clip: text; -webkit-background-clip: text; color: transparent; }
-    .info-siswa { background: #1a1f2e; border-radius: 16px; padding: 12px 16px; margin-bottom: 20px; border: 1px solid #2a3040; }
-    .info-siswa p { font-size: 0.85rem; margin: 4px 0; }
-    .info-siswa span { color: #ffaa44; font-weight: bold; }
-    .timer-box { background: #1a1f2e; border: 2px solid #ff4444; border-radius: 60px; padding: 12px 20px; text-align: center; margin-bottom: 20px; }
-    .timer { font-size: 2.5rem; font-weight: bold; font-family: monospace; color: #ff4444; }
-    .soal-card { background: #11151f; border-radius: 20px; padding: 20px; margin-bottom: 20px; border: 1px solid #2a3040; }
-    .soal-header { display: flex; justify-content: space-between; margin-bottom: 15px; }
-    .soal-num { background: #ffaa44; color: #1a1a1a; padding: 4px 12px; border-radius: 30px; font-size: 0.8rem; font-weight: bold; }
-    .soal-text { font-size: 1rem; margin-bottom: 20px; line-height: 1.5; }
-    .options { display: flex; flex-direction: column; gap: 10px; }
-    .option { background: #1a1f2e; border: 1px solid #2a3040; border-radius: 50px; padding: 12px 18px; cursor: pointer; display: flex; align-items: center; gap: 12px; transition: all 0.2s; }
-    .option:hover { background: #222838; border-color: #ffaa44; }
-    .option.selected { background: #2a3045; border-color: #ffaa44; box-shadow: 0 0 8px rgba(255,170,68,0.3); }
-    .option-letter { font-weight: bold; color: #ffaa44; width: 28px; }
-    .nav-buttons { display: flex; gap: 15px; margin-top: 20px; }
-    button { background: #2a3040; border: none; padding: 12px 20px; border-radius: 50px; color: white; font-weight: bold; cursor: pointer; flex: 1; }
-    button.primary { background: #ffaa44; color: #1a1a1a; }
-    button.danger { background: #dc2626; }
-    .progress { text-align: center; margin-top: 15px; font-size: 0.75rem; color: #888; }
-    .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); display: flex; justify-content: center; align-items: center; z-index: 1000; backdrop-filter: blur(10px); }
-    .modal-content { background: #1a1f2e; border-radius: 24px; padding: 30px; text-align: center; max-width: 300px; border: 1px solid #ffaa44; }
-    .hidden { display: none; }
-    .result-card { background: #11151f; border-radius: 24px; padding: 30px; text-align: center; border: 1px solid #ffaa44; }
-    .nilai-besar { font-size: 3rem; font-weight: bold; margin: 20px 0; }
+    .timer-box {
+      background: #1a1f2e;
+      border: 2px solid #ff4444;
+      border-radius: 60px;
+      padding: 12px 20px;
+      text-align: center;
+      margin-bottom: 20px;
+    }
     
-    /* Dashboard Guru */
+    .timer {
+      font-size: 2.5rem;
+      font-weight: bold;
+      font-family: monospace;
+      color: #ff4444;
+    }
+    
+    .soal-card {
+      background: #11151f;
+      border-radius: 20px;
+      padding: 20px;
+      margin-bottom: 20px;
+      border: 1px solid #2a3040;
+    }
+    
+    .soal-text {
+      font-size: 1rem;
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+    
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    
+    .option {
+      background: #1a1f2e;
+      border: 1px solid #2a3040;
+      border-radius: 50px;
+      padding: 12px 18px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    .option.selected {
+      background: #2a3045;
+      border-color: #ffaa44;
+    }
+    
+    .option-letter {
+      font-weight: bold;
+      color: #ffaa44;
+      width: 28px;
+    }
+    
+    .nav-buttons {
+      display: flex;
+      gap: 15px;
+      margin-top: 20px;
+    }
+    
+    button {
+      background: #2a3040;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 50px;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      flex: 1;
+    }
+    
+    button.primary {
+      background: #ffaa44;
+      color: #1a1a1a;
+    }
+    
+    button.danger {
+      background: #dc2626;
+    }
+    
+    .progress {
+      text-align: center;
+      margin-top: 15px;
+      font-size: 0.75rem;
+      color: #888;
+    }
+    
+    /* Dashboard */
     .dashboard-header {
       display: flex;
       justify-content: space-between;
@@ -198,6 +241,7 @@
       flex-wrap: wrap;
       gap: 10px;
     }
+    
     .btn-tambah {
       background: #ffaa44;
       color: #1a1a1a;
@@ -205,8 +249,8 @@
       border-radius: 60px;
       border: none;
       cursor: pointer;
-      font-weight: bold;
     }
+    
     .btn-logout {
       background: #dc2626;
       color: white;
@@ -215,49 +259,45 @@
       border: none;
       cursor: pointer;
     }
+    
     .soal-list {
       display: flex;
       flex-direction: column;
       gap: 15px;
     }
+    
     .soal-item {
       background: #1a1f2e;
       border-radius: 16px;
       padding: 15px;
       border: 1px solid #2a3040;
     }
+    
     .soal-item-header {
       display: flex;
       justify-content: space-between;
-      align-items: center;
       margin-bottom: 10px;
-      flex-wrap: wrap;
-      gap: 10px;
     }
-    .soal-item-text {
-      margin-bottom: 10px;
-      padding: 10px;
+    
+    .result-card {
       background: #11151f;
-      border-radius: 12px;
+      border-radius: 24px;
+      padding: 30px;
+      text-align: center;
     }
-    .soal-item-options {
-      font-size: 0.8rem;
-      color: #aaa;
-      margin-bottom: 10px;
+    
+    .nilai-besar {
+      font-size: 3rem;
+      font-weight: bold;
+      margin: 20px 0;
     }
-    .soal-actions button {
-      width: auto;
-      padding: 5px 12px;
-      margin-right: 8px;
-      font-size: 0.8rem;
+    
+    .hidden {
+      display: none;
     }
-    .btn-edit { background: #44aaff; }
-    .btn-delete { background: #dc2626; }
     
     @media (max-width: 600px) {
       .role-buttons { flex-direction: column; }
-      .timer { font-size: 1.8rem; }
-      .dashboard-header { flex-direction: column; }
     }
   </style>
 </head>
@@ -265,91 +305,87 @@
 
 <div id="app">
   <!-- LOGIN PAGE -->
-  <div id="loginPage" class="login-page">
-    <div class="login-card">
-      <h1>📚 UJIAN ONLINE SMK</h1>
-      <div class="sub">Pilih Role Login</div>
-      
-      <div class="role-buttons">
-        <div class="role-btn learnid" data-role="learn">
-          <i>🎓</i>
-          <div class="role-title">LearnID</div>
-          <div class="role-desc">Siswa / Peserta Ujian</div>
+  <div id="loginPage">
+    <div class="login-page">
+      <div class="login-card">
+        <h1>📚 UJIAN ONLINE SMK</h1>
+        <div class="sub">Pilih Role Login</div>
+        
+        <div class="role-buttons">
+          <div class="role-btn learnid" id="learnBtn">
+            <i>🎓</i>
+            <div>LearnID</div>
+            <div style="font-size: 10px; color: #888;">Siswa</div>
+          </div>
+          <div class="role-btn teachid" id="teachBtn">
+            <i>👨‍🏫</i>
+            <div>TeachID</div>
+            <div style="font-size: 10px; color: #888;">Guru</div>
+          </div>
         </div>
-        <div class="role-btn teachid" data-role="teach">
-          <i>👨‍🏫</i>
-          <div class="role-title">TeachID</div>
-          <div class="role-desc">Guru / Pengelola Soal</div>
+        
+        <div id="loginInput" style="display: none; margin-top: 20px;">
+          <input type="text" id="namaInput" placeholder="Masukkan Nama Lengkap">
+          <input type="text" id="kelasInput" placeholder="Kelas">
+          <button id="submitLoginBtn" class="login-btn">Login</button>
         </div>
-      </div>
-      
-      <div id="loginInput" class="login-input">
-        <input type="text" id="loginNama" placeholder="Masukkan Nama Lengkap">
-        <input type="text" id="loginKelas" placeholder="Kelas (untuk siswa)">
-        <button class="login-btn" id="loginBtn">Login</button>
       </div>
     </div>
   </div>
   
-  <!-- MAIN APP (akan diisi oleh JS) -->
+  <!-- MAIN APP -->
   <div id="mainApp" style="display: none;"></div>
 </div>
 
 <script>
-  // ========== DATA SOAL DEFAULT ==========
+  // ========== DATA SOAL ==========
   let soalData = [
     { text: "Apa kepanjangan dari SMK?", options: ["Sekolah Menengah Kejuruan", "Sekolah Menengah Karir", "Sekolah Menengah Kreatif", "Sekolah Menengah Kompeten"] },
-    { text: "Berapa nilai minimal KKM (Kriteria Ketuntasan Minimal) umumnya?", options: ["60", "65", "70", "75"] },
+    { text: "Berapa nilai minimal KKM umumnya?", options: ["60", "65", "70", "75"] },
     { text: "Apa itu Ujian Sekolah?", options: ["Ujian yang diselenggarakan oleh sekolah", "Ujian nasional", "Ujian masuk PTN", "Ujian praktek saja"] },
-    { text: "Siapa yang bertanggung jawab atas pelaksanaan ujian sekolah?", options: ["Kepala Sekolah", "Guru Mata Pelajaran", "Dinas Pendidikan", "Semua benar"] },
-    { text: "Apa tujuan utama ujian sekolah?", options: ["Mengukur pencapaian kompetensi siswa", "Membuat siswa stres", "Mengisi waktu", "Menaikkan gaji guru"] }
+    { text: "Siapa yang bertanggung jawab atas ujian sekolah?", options: ["Kepala Sekolah", "Guru", "Dinas Pendidikan", "Semua benar"] },
+    { text: "Apa tujuan utama ujian sekolah?", options: ["Mengukur kompetensi siswa", "Membuat siswa stres", "Mengisi waktu", "Menaikkan gaji guru"] }
   ];
   
-  let kunciJawaban = [0, 0, 0, 0, 0];
   let selectedRole = null;
   
-  // ========== DOM ELEMENTS ==========
-  const roleBtns = document.querySelectorAll('.role-btn');
-  const loginInput = document.getElementById('loginInput');
-  const loginNama = document.getElementById('loginNama');
-  const loginKelas = document.getElementById('loginKelas');
-  const loginBtn = document.getElementById('loginBtn');
+  // ========== DOM Elements ==========
+  const learnBtn = document.getElementById('learnBtn');
+  const teachBtn = document.getElementById('teachBtn');
+  const loginInputDiv = document.getElementById('loginInput');
+  const namaInput = document.getElementById('namaInput');
+  const kelasInput = document.getElementById('kelasInput');
+  const submitLoginBtn = document.getElementById('submitLoginBtn');
   
-  // ========== SELECT ROLE ==========
-  roleBtns.forEach(btn => {
-    btn.addEventListener('click', function() {
-      // Remove selected class from all
-      roleBtns.forEach(b => b.classList.remove('selected'));
-      // Add selected class to current
-      this.classList.add('selected');
-      // Get role
-      selectedRole = this.getAttribute('data-role');
-      
-      // Show login input
-      loginInput.classList.add('show');
-      
-      // Show/hide kelas input
-      if (selectedRole === 'learn') {
-        loginKelas.style.display = 'block';
-        loginKelas.placeholder = "Kelas (contoh: XII RPL 1)";
-      } else {
-        loginKelas.style.display = 'none';
-      }
-    });
-  });
+  // ========== Fungsi Pilih Role ==========
+  learnBtn.onclick = function() {
+    selectedRole = 'learn';
+    learnBtn.style.borderColor = '#ffaa44';
+    learnBtn.style.background = '#2a3045';
+    teachBtn.style.borderColor = '#2a3040';
+    teachBtn.style.background = '#1a1f2e';
+    kelasInput.style.display = 'block';
+    kelasInput.placeholder = "Kelas (contoh: XII RPL 1)";
+    loginInputDiv.style.display = 'block';
+  };
   
-  // ========== LOGIN FUNCTION ==========
-  loginBtn.addEventListener('click', function() {
-    const nama = loginNama.value.trim();
-    const kelas = loginKelas.value.trim();
+  teachBtn.onclick = function() {
+    selectedRole = 'teach';
+    teachBtn.style.borderColor = '#ffaa44';
+    teachBtn.style.background = '#2a3045';
+    learnBtn.style.borderColor = '#2a3040';
+    learnBtn.style.background = '#1a1f2e';
+    kelasInput.style.display = 'none';
+    loginInputDiv.style.display = 'block';
+  };
+  
+  // ========== Fungsi Login ==========
+  submitLoginBtn.onclick = function() {
+    const nama = namaInput.value.trim();
+    const kelas = kelasInput.value.trim();
     
     if (!nama) {
       alert("Masukkan nama lengkap!");
-      return;
-    }
-    
-    if (selectedRole === 'learn' && !kelas) {
-      alert("Masukkan kelas!");
       return;
     }
     
@@ -358,111 +394,82 @@
       return;
     }
     
-    const user = { nama, kelas, role: selectedRole };
+    if (selectedRole === 'learn' && !kelas) {
+      alert("Masukkan kelas!");
+      return;
+    }
     
     if (selectedRole === 'learn') {
-      startStudentExam(user);
+      startExam(nama, kelas);
     } else {
-      startTeacherDashboard(user);
+      startTeacherDashboard(nama);
     }
-  });
+  };
   
-  // ========== MODE LEARNID (SISWA) ==========
-  let jawabanUser = [];
-  let currentIndex = 0;
-  let timerSeconds = 90 * 60;
+  // ========== UJIAN SISWA ==========
+  let jawaban = [];
+  let currentSoal = 0;
+  let waktu = 90 * 60;
   let timerInterval = null;
-  let examSubmitted = false;
+  let ujianSelesai = false;
   
-  function startStudentExam(user) {
-    jawabanUser = new Array(soalData.length).fill(null);
-    currentIndex = 0;
-    timerSeconds = 90 * 60;
-    examSubmitted = false;
+  function startExam(nama, kelas) {
+    jawaban = new Array(soalData.length).fill(null);
+    currentSoal = 0;
+    waktu = 90 * 60;
+    ujianSelesai = false;
+    if (timerInterval) clearInterval(timerInterval);
     
     document.getElementById('loginPage').style.display = 'none';
     const mainApp = document.getElementById('mainApp');
     
     mainApp.innerHTML = `
-      <div class="lockdown-bar">🔒 LOCKDOWN MODE AKTIF 🔒 | UJIAN ONLINE SMK | DILARANG KELUAR APLIKASI</div>
+      <div class="lockdown-bar">🔒 LOCKDOWN MODE 🔒 | DILARANG KELUAR</div>
       <div class="container">
-        <div class="header">
-          <h1>📝 UJIAN ONLINE SMK</h1>
-          <div class="subtitle">Mode: LearnID (Siswa)</div>
+        <div style="background: #1a1f2e; border-radius: 16px; padding: 12px; margin-bottom: 20px;">
+          <p>👤 Nama: <strong>${nama}</strong></p>
+          <p>📚 Kelas: <strong>${kelas}</strong></p>
         </div>
-        
-        <div class="info-siswa">
-          <p>👤 Nama: <span>${user.nama}</span></p>
-          <p>📚 Kelas: <span>${user.kelas}</span></p>
-        </div>
-        
         <div class="timer-box">
-          <div class="timer" id="timer">90:00</div>
-          <div class="timer-label">Sisa Waktu Ujian</div>
+          <div class="timer" id="timerDisplay">90:00</div>
+          <div>Sisa Waktu</div>
         </div>
-        
         <div id="soalContainer"></div>
-        
         <div class="nav-buttons">
-          <button id="prevBtn">◀ Sebelumnya</button>
-          <button id="nextBtn" class="primary">Selanjutnya ▶</button>
+          <button id="prevSoalBtn">◀ Sebelumnya</button>
+          <button id="nextSoalBtn" class="primary">Selanjutnya ▶</button>
         </div>
-        
-        <div class="progress" id="progress"></div>
-        <button id="submitBtn" class="danger" style="margin-top: 20px;">📤 SUBMIT UJIAN 📤</button>
+        <div class="progress" id="progressText"></div>
+        <button id="submitUjianBtn" class="danger" style="margin-top: 20px;">📤 SUBMIT UJIAN</button>
       </div>
     `;
     
     mainApp.style.display = 'block';
     
-    // Lockdown functions
-    window.history.pushState(null, null, location.href);
-    window.addEventListener('popstate', function() { if (!examSubmitted) showWarning(); window.history.pushState(null, null, location.href); });
-    document.addEventListener('contextmenu', (e) => e.preventDefault());
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J')) || (e.ctrlKey && e.key === 'u')) {
-        e.preventDefault();
-        showWarning();
-      }
-    });
+    renderSoal();
+    startTimer();
     
-    renderStudentSoal();
-    startStudentTimer(user);
-    
-    document.getElementById('prevBtn').addEventListener('click', () => { if (currentIndex > 0) { currentIndex--; renderStudentSoal(); } });
-    document.getElementById('nextBtn').addEventListener('click', () => { if (currentIndex < soalData.length - 1) { currentIndex++; renderStudentSoal(); } });
-    document.getElementById('submitBtn').addEventListener('click', () => submitStudentExam(user));
+    document.getElementById('prevSoalBtn').onclick = () => { if (currentSoal > 0) { currentSoal--; renderSoal(); } };
+    document.getElementById('nextSoalBtn').onclick = () => { if (currentSoal < soalData.length - 1) { currentSoal++; renderSoal(); } };
+    document.getElementById('submitUjianBtn').onclick = () => submitExam(nama, kelas);
   }
   
-  function showWarning() {
-    let modal = document.getElementById('warningModal');
-    if (!modal) {
-      modal = document.createElement('div');
-      modal.id = 'warningModal';
-      modal.className = 'modal';
-      modal.innerHTML = `<div class="modal-content"><h2>⚠️ PERINGATAN ⚠️</h2><p>Jangan keluar dari ujian sebelum selesai!</p><button onclick="document.getElementById('warningModal').remove()">Kembali ke Ujian</button></div>`;
-      document.body.appendChild(modal);
-    }
-    modal.classList.remove('hidden');
-  }
-  
-  function renderStudentSoal() {
+  function renderSoal() {
     const container = document.getElementById('soalContainer');
-    if (!container) return;
-    const soal = soalData[currentIndex];
-    const jawaban = jawabanUser[currentIndex];
+    const soal = soalData[currentSoal];
+    const jawab = jawaban[currentSoal];
     
     container.innerHTML = `
       <div class="soal-card">
-        <div class="soal-header">
-          <div class="soal-num">Soal ${currentIndex + 1}</div>
+        <div style="background: #ffaa44; color: #1a1a1a; display: inline-block; padding: 4px 12px; border-radius: 30px; font-size: 12px; margin-bottom: 15px;">
+          Soal ${currentSoal + 1}
         </div>
         <div class="soal-text">${soal.text}</div>
         <div class="options">
           ${soal.options.map((opt, idx) => `
-            <div class="option ${jawaban === idx ? 'selected' : ''}" data-opt-index="${idx}">
+            <div class="option ${jawab === idx ? 'selected' : ''}" data-opt="${idx}">
               <span class="option-letter">${String.fromCharCode(65 + idx)}.</span>
-              <span class="option-text">${opt}</span>
+              <span>${opt}</span>
             </div>
           `).join('')}
         </div>
@@ -470,115 +477,113 @@
     `;
     
     document.querySelectorAll('.option').forEach(opt => {
-      opt.addEventListener('click', () => {
-        jawabanUser[currentIndex] = parseInt(opt.dataset.optIndex);
-        renderStudentSoal();
-      });
+      opt.onclick = () => {
+        jawaban[currentSoal] = parseInt(opt.dataset.opt);
+        renderSoal();
+        updateProgress();
+      };
     });
     
-    const answeredCount = jawabanUser.filter(j => j !== null).length;
-    const progressEl = document.getElementById('progress');
-    if (progressEl) progressEl.innerHTML = `📝 Terjawab: ${answeredCount} / ${soalData.length} soal`;
+    updateProgress();
   }
   
-  function startStudentTimer(user) {
-    if (timerInterval) clearInterval(timerInterval);
+  function updateProgress() {
+    const answered = jawaban.filter(j => j !== null).length;
+    const progress = document.getElementById('progressText');
+    if (progress) progress.innerHTML = `📝 Terjawab: ${answered} / ${soalData.length} soal`;
+  }
+  
+  function startTimer() {
     timerInterval = setInterval(() => {
-      if (!examSubmitted && timerSeconds > 0) {
-        timerSeconds--;
-        const minutes = Math.floor(timerSeconds / 60);
-        const seconds = timerSeconds % 60;
-        const timerEl = document.getElementById('timer');
-        if (timerEl) timerEl.innerText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-        if (timerSeconds === 0) submitStudentExam(user);
+      if (!ujianSelesai && waktu > 0) {
+        waktu--;
+        const menit = Math.floor(waktu / 60);
+        const detik = waktu % 60;
+        const timerDisplay = document.getElementById('timerDisplay');
+        if (timerDisplay) timerDisplay.innerText = `${menit.toString().padStart(2, '0')}:${detik.toString().padStart(2, '0')}`;
+        if (waktu === 0) alert("WAKTU HABIS!");
       }
     }, 1000);
   }
   
-  function submitStudentExam(user) {
-    if (examSubmitted) return;
-    const unanswered = jawabanUser.filter(j => j === null).length;
-    if (unanswered > 0) {
-      alert(`⚠️ Masih ada ${unanswered} soal yang belum dijawab!`);
+  function submitExam(nama, kelas) {
+    const belumDijawab = jawaban.filter(j => j === null).length;
+    if (belumDijawab > 0) {
+      alert(`Masih ada ${belumDijawab} soal yang belum dijawab!`);
       return;
     }
     
-    examSubmitted = true;
+    ujianSelesai = true;
     clearInterval(timerInterval);
     
     let score = 0;
-    jawabanUser.forEach((jawab, idx) => { if (jawab === kunciJawaban[idx]) score++; });
+    jawaban.forEach((j, idx) => { if (j === 0) score++; });
     const nilai = Math.round((score / soalData.length) * 100);
     
-    const soalContainer = document.getElementById('soalContainer');
-    if (soalContainer) {
-      soalContainer.innerHTML = `
-        <div class="result-card">
-          <h2>🎉 UJIAN SELESAI 🎉</h2>
-          <div class="nilai-besar">${nilai}%</div>
-          <p>Skor: ${score} / ${soalData.length}</p>
-          <p>${nilai >= 75 ? '✅ LULUS' : '❌ TIDAK LULUS'}</p>
-        </div>
-      `;
-    }
-    const navButtons = document.querySelector('.nav-buttons');
-    if (navButtons) navButtons.style.display = 'none';
-    const submitBtn = document.getElementById('submitBtn');
-    if (submitBtn) submitBtn.style.display = 'none';
-    const timerBox = document.querySelector('.timer-box');
-    if (timerBox) timerBox.style.display = 'none';
+    document.getElementById('soalContainer').innerHTML = `
+      <div class="result-card">
+        <h2>🎉 UJIAN SELESAI 🎉</h2>
+        <div class="nilai-besar">${nilai}%</div>
+        <p>Skor: ${score} / ${soalData.length}</p>
+        <p>${nilai >= 75 ? '✅ LULUS' : '❌ TIDAK LULUS'}</p>
+      </div>
+    `;
+    document.querySelector('.nav-buttons').style.display = 'none';
+    document.getElementById('submitUjianBtn').style.display = 'none';
+    document.querySelector('.timer-box').style.display = 'none';
     
     // Kirim ke Telegram
-    kirimKeTelegram({ nama: user.nama, kelas: user.kelas, nilai, score, total: soalData.length });
+    kirimTelegram(nama, kelas, score, nilai);
   }
   
-  // ========== MODE TEACHID (GURU) ==========
-  function startTeacherDashboard(user) {
+  // ========== DASHBOARD GURU ==========
+  function startTeacherDashboard(nama) {
     document.getElementById('loginPage').style.display = 'none';
     const mainApp = document.getElementById('mainApp');
     
+    renderDashboardGuru(mainApp, nama);
+  }
+  
+  function renderDashboardGuru(mainApp, nama) {
     mainApp.innerHTML = `
       <div class="container">
         <div class="dashboard-header">
           <h1>👨‍🏫 DASHBOARD GURU</h1>
-          <div style="display: flex; gap: 10px;">
-            <button class="btn-tambah" id="tambahSoalBtn">+ Tambah Soal</button>
-            <button class="btn-logout" id="logoutBtn">Logout</button>
+          <div>
+            <button id="tambahSoalBtnGuru" class="btn-tambah">+ Tambah Soal</button>
+            <button id="logoutBtnGuru" class="btn-logout">Logout</button>
           </div>
         </div>
         <div style="background: #1a1f2e; border-radius: 16px; padding: 15px; margin-bottom: 20px;">
-          <p>👤 Guru: <strong>${user.nama}</strong></p>
-          <p>📋 Total Soal: <strong id="totalSoal">${soalData.length}</strong> soal</p>
-          <p>🎯 Mode: <strong style="color: #ffaa44;">EDIT & KELOLA SOAL</strong></p>
+          <p>👤 Guru: <strong>${nama}</strong></p>
+          <p>📋 Total Soal: <strong id="totalSoalCount">${soalData.length}</strong> soal</p>
         </div>
-        <div id="soalList" class="soal-list"></div>
+        <div id="soalListContainer" class="soal-list"></div>
       </div>
     `;
     
     mainApp.style.display = 'block';
     renderSoalList();
     
-    document.getElementById('tambahSoalBtn').addEventListener('click', showTambahSoalModal);
-    document.getElementById('logoutBtn').addEventListener('click', () => {
-      location.reload();
-    });
+    document.getElementById('tambahSoalBtnGuru').onclick = tambahSoal;
+    document.getElementById('logoutBtnGuru').onclick = () => location.reload();
   }
   
   function renderSoalList() {
-    const container = document.getElementById('soalList');
+    const container = document.getElementById('soalListContainer');
     if (!container) return;
     
     container.innerHTML = soalData.map((soal, idx) => `
-      <div class="soal-item" data-idx="${idx}">
+      <div class="soal-item">
         <div class="soal-item-header">
-          <span class="soal-num">Soal ${idx + 1}</span>
-          <div class="soal-actions">
-            <button class="btn-edit" onclick="window.editSoal(${idx})">✏️ Edit</button>
-            <button class="btn-delete" onclick="window.hapusSoal(${idx})">🗑️ Hapus</button>
+          <span style="background: #ffaa44; color: #1a1a1a; padding: 2px 10px; border-radius: 20px;">Soal ${idx + 1}</span>
+          <div>
+            <button onclick="editSoalFunc(${idx})" style="background: #44aaff; border: none; padding: 5px 12px; border-radius: 20px; cursor: pointer;">✏️ Edit</button>
+            <button onclick="hapusSoalFunc(${idx})" style="background: #dc2626; border: none; padding: 5px 12px; border-radius: 20px; cursor: pointer; margin-left: 5px;">🗑️ Hapus</button>
           </div>
         </div>
-        <div class="soal-item-text">📖 ${soal.text}</div>
-        <div class="soal-item-options">
+        <div class="soal-text" style="margin-top: 10px;">📖 ${soal.text}</div>
+        <div style="font-size: 12px; color: #888; margin-top: 10px;">
           A. ${soal.options[0]}<br>
           B. ${soal.options[1]}<br>
           C. ${soal.options[2]}<br>
@@ -587,10 +592,68 @@
       </div>
     `).join('');
     
-    const totalSoalEl = document.getElementById('totalSoal');
-    if (totalSoalEl) totalSoalEl.innerText = soalData.length;
+    const totalSpan = document.getElementById('totalSoalCount');
+    if (totalSpan) totalSpan.innerText = soalData.length;
   }
   
-  window.editSoal = function(idx) {
+  window.editSoalFunc = function(idx) {
     const soal = soalData[idx];
     const newText = prompt("Edit soal:", soal.text);
+    if (newText) soal.text = newText;
+    
+    const newA = prompt("Option A:", soal.options[0]);
+    const newB = prompt("Option B:", soal.options[1]);
+    const newC = prompt("Option C:", soal.options[2]);
+    const newD = prompt("Option D:", soal.options[3]);
+    
+    if (newA) soal.options[0] = newA;
+    if (newB) soal.options[1] = newB;
+    if (newC) soal.options[2] = newC;
+    if (newD) soal.options[3] = newD;
+    
+    renderSoalList();
+    alert("Soal berhasil diedit!");
+  };
+  
+  window.hapusSoalFunc = function(idx) {
+    if (confirm("Hapus soal ini?")) {
+      soalData.splice(idx, 1);
+      renderSoalList();
+      alert("Soal berhasil dihapus!");
+    }
+  };
+  
+  function tambahSoal() {
+    const text = prompt("Masukkan teks soal:");
+    if (!text) return;
+    
+    const a = prompt("Option A:");
+    const b = prompt("Option B:");
+    const c = prompt("Option C:");
+    const d = prompt("Option D:");
+    
+    if (a && b && c && d) {
+      soalData.push({ text, options: [a, b, c, d] });
+      renderSoalList();
+      alert("Soal berhasil ditambahkan!");
+    } else {
+      alert("Harap isi semua option!");
+    }
+  }
+  
+  // ========== TELEGRAM ==========
+  function kirimTelegram(nama, kelas, score, nilai) {
+    const pesan = `📢 HASIL UJIAN SMK\n\nNama: ${nama}\nKelas: ${kelas}\nSkor: ${score}/${soalData.length}\nNilai: ${nilai}%\nStatus: ${nilai >= 75 ? 'LULUS' : 'TIDAK LULUS'}`;
+    
+    fetch(`https://api.telegram.org/bot8743858038:AAHr-VAbGCphu9uy584HPG6GunbdFG3AjE8/sendMessage`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ chat_id: '7509845641', text: pesan })
+    }).catch(e => console.log("Telegram error:", e));
+  }
+  
+  // Blok klik kanan
+  document.addEventListener('contextmenu', (e) => e.preventDefault());
+</script>
+</body>
+</html>
