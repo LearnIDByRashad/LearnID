@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>🔒 MAE EXAM | Lockdown Mode</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    
+    body {
+      font-family: 'Poppins', monospace;
+      background: #0a0a0a;
+      color: white;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    
+    /* Lockdown warning */
+    .lockdown-warning {
+      background: #ff0000aa;
+      color: white;
+      text-align: center;
+      padding: 8px;
+      font-size: 12px;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+    
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    .header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    
+    .timer-box {
+      background: #1a1a1a;
+      border: 2px solid #ff4444;
+      border-radius: 60px;
+      padding: 12px 20px;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    
+    .timer {
+      font-size: 2.5rem;
+      font-weight: bold;
+      font-family: monospace;
+      color: #ff4444;
+    }
+    
+    .timer-label {
+      font-size: 0.7rem;
+      color: #888;
+    }
+    
+    .soal-card {
+      background: #111;
+      border-radius: 20px;
+      padding: 20px;
+      margin-bottom: 20px;
+      border: 1px solid #333;
+    }
+    
+    .soal-num {
+      font-size: 0.8rem;
+      color: #ffaa00;
+      margin-bottom: 10px;
+    }
+    
+    .soal-text {
+      font-size: 1rem;
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+    
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    
+    .option {
+      background: #1a1a1a;
+      border: 1px solid #333;
+      border-radius: 50px;
+      padding: 12px 18px;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    .option:hover {
+      background: #252525;
+      border-color: #ffaa00;
+    }
+    
+    .option.selected {
+      background: #2a2a2a;
+      border-color: #ffaa00;
+      box-shadow: 0 0 8px rgba(255,170,0,0.3);
+    }
+    
+    .option-letter {
+      font-weight: bold;
+      color: #ffaa00;
+      width: 30px;
+    }
+    
+    .option-text {
+      flex: 1;
+    }
+    
+    .nav-buttons {
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+      margin-top: 20px;
+    }
+    
+    button {
+      background: #333;
+      border: none;
+      padding: 14px 24px;
+      border-radius: 50px;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.2s;
+      flex: 1;
+    }
+    
+    button:hover {
+      background: #444;
+    }
+    
+    button.primary {
+      background: #ffaa00;
+      color: #1a1a1a;
+    }
+    
+    button.primary:hover {
+      background: #ffcc44;
+    }
+    
+    button.danger {
+      background: #ff4444;
+    }
+    
+    .progress {
+      text-align: center;
+      margin-top: 15px;
+      font-size: 0.8rem;
+      color: #888;
+    }
+    
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.95);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      backdrop-filter: blur(10px);
+    }
+    
+    .modal-content {
+      background: #1a1a1a;
+      border-radius: 30px;
+      padding: 30px;
+      text-align: center;
+      max-width: 300px;
+      border: 1px solid #ffaa00;
+    }
+    
+    .hidden {
+      display: none;
+    }
+    
+    @media (max-width: 600px) {
+      .container { padding: 15px; }
+      .timer { font-size: 1.8rem; }
+      .option { padding: 10px 14px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="lockdown-warning">
+  🔒 LOCKDOWN MODE AKTIF 🔒 | JANGAN KELUAR APLIKASI SEBELUM UJIAN SELESAI
+</div>
+
+<div class="container" id="appContainer">
+  <div class="header">
+    <h1>⚡ MAE EXAM ⚡</h1>
+    <p>Seleksi Marga | Lockdown Mode</p>
+  </div>
+  
+  <div class="timer-box">
+    <div class="timer" id="timer">30:00</div>
+    <div class="timer-label">Sisa Waktu</div>
+  </div>
+  
+  <div id="soalContainer"></div>
+  
+  <div class="nav-buttons">
+    <button id="prevBtn" class="secondary">◀ Sebelumnya</button>
+    <button id="nextBtn" class="primary">Selanjutnya ▶</button>
+  </div>
+  
+  <div class="progress" id="progress"></div>
+  
+  <button id="submitBtn" style="margin-top: 20px; background: #ff4444;">✍️ SUBMIT UJIAN ✍️</button>
+</div>
+
+<!-- Modal Peringatan -->
+<div id="warningModal" class="modal hidden">
+  <div class="modal-content">
+    <h2 style="color: #ffaa00;">⚠️ PERINGATAN ⚠️</h2>
+    <p style="margin: 15px 0;">Jangan keluar dari aplikasi sebelum ujian selesai!</p>
+    <button id="closeModalBtn" style="background: #ffaa00; color: #1a1a1a;">Kembali ke Ujian</button>
+  </div>
+</div>
+
+<script>
+  // ========== DATA SOAL CONTOH ==========
+  const soalData = [
+    {
+      text: "Apa motto utama MAE Selection?",
+      options: ["Darah pemberani tak pernah mati", "Menang atau kalah", "Bersatu kita teguh", "Pantang menyerah"]
+    },
+    {
+      text: "Siapa founder MAE Selection?",
+      options: ["Raul", "Yonz", "Novva", "Semua benar"]
+    },
+    {
+      text: "Tahun berapa MAE Selection berdiri?",
+      options: ["2019", "2020", "2021", "2022"]
+    },
+    {
+      text: "Apa senjata utama MAE?",
+      options: ["Kebersamaan", "Kekuatan fisik", "Sihir", "Teknologi"]
+    },
+    {
+      text: "Siapa yang bertanggung jawab sebagai Admin Marga?",
+      options: ["Raul, Yonz, Novva, Dimm, Kyy", "Hanya Raul", "Yonz dan Novva", "Semua anggota"]
+    }
+  ];
+  
+  let jawabanUser = new Array(soalData.length).fill(null);
+  let currentIndex = 0;
+  let timerSeconds = 30 * 60; // 30 menit
+  let timerInterval = null;
+  let examSubmitted = false;
+  
+  // ========== LOCKDOWN FUNCTIONS (Web Version) ==========
+  function blockContextMenu(e) {
+    e.preventDefault();
+    return false;
+  }
+  
+  function blockDevTools() {
+    // Deteksi inspect element
+    document.addEventListener('contextmenu', blockContextMenu);
+    document.addEventListener('keydown', (e) => {
+      // Block F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U, Ctrl+S
+      if (e.key === 'F12' || 
+          (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J')) ||
+          (e.ctrlKey && (e.key === 'u' || e.key === 's'))) {
+        e.preventDefault();
+        showWarning();
+        return false;
+      }
+    });
+  }
+  
+  function detectVisibilityChange() {
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden && !examSubmitted) {
+        showWarning();
+      }
+    });
+  }
+  
+  function detectWindowBlur() {
+    window.addEventListener('blur', () => {
+      if (!examSubmitted) {
+        showWarning();
+      }
+    });
+  }
+  
+  function showWarning() {
+    const modal = document.getElementById('warningModal');
+    modal.classList.remove('hidden');
+    // pause timer while warning?
+  }
+  
+  function hideWarning() {
+    const modal = document.getElementById('warningModal');
+    modal.classList.add('hidden');
+  }
+  
+  // ========== RENDER SOAL ==========
+  function renderSoal() {
+    const container = document.getElementById('soalContainer');
+    const soal = soalData[currentIndex];
+    const jawaban = jawabanUser[currentIndex];
+    
+    container.innerHTML = `
+      <div class="soal-card">
+        <div class="soal-num">Soal ${currentIndex + 1} dari ${soalData.length}</div>
+        <div class="soal-text">${soal.text}</div>
+        <div class="options">
+          ${soal.options.map((opt, idx) => `
+            <div class="option ${jawaban === idx ? 'selected' : ''}" data-opt-index="${idx}">
+              <span class="option-letter">${String.fromCharCode(65 + idx)}.</span>
+              <span class="option-text">${opt}</span>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `;
+    
+    // Pasang event click ke option
+    document.querySelectorAll('.option').forEach(opt => {
+      opt.addEventListener('click', (e) => {
+        const optIndex = parseInt(opt.dataset.optIndex);
+        jawabanUser[currentIndex] = optIndex;
+        renderSoal();
+      });
+    });
+    
+    // Update progress
+    const answeredCount = jawabanUser.filter(j => j !== null).length;
+    document.getElementById('progress').innerHTML = `📝 Terjawab: ${answeredCount} / ${soalData.length} soal`;
+  }
+  
+  // ========== NAVIGASI ==========
+  function prevSoal() {
+    if (currentIndex > 0) {
+      currentIndex--;
+      renderSoal();
+    }
+  }
+  
+  function nextSoal() {
+    if (currentIndex < soalData.length - 1) {
+      currentIndex++;
+      renderSoal();
+    }
+  }
+  
+  // ========== TIMER ==========
+  function updateTimerDisplay() {
+    const minutes = Math.floor(timerSeconds / 60);
+    const seconds = timerSeconds % 60;
+    document.getElementById('timer').innerText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    
+    if (timerSeconds <= 0) {
+      clearInterval(timerInterval);
+      alert("⏰ WAKTU HABIS! Ujian akan disubmit otomatis.");
+      submitExam();
+    }
+  }
+  
+  function startTimer() {
+    timerInterval = setInterval(() => {
+      if (!examSubmitted) {
+        timerSeconds--;
+        updateTimerDisplay();
+      }
+    }, 1000);
+  }
+  
+  // ========== SUBMIT ==========
+  function submitExam() {
+    if (examSubmitted) return;
+    
+    // Cek apakah semua soal sudah dijawab
+    const unanswered = jawabanUser.filter(j => j === null).length;
+    if (unanswered > 0) {
+      alert(`⚠️ Masih ada ${unanswered} soal yang belum dijawab! Selesaikan dulu.`);
+      return;
+    }
+    
+    examSubmitted = true;
+    clearInterval(timerInterval);
+    
+    // Hitung skor
+    let score = 0;
+    jawabanUser.forEach((jawab, idx) => {
+      // Contoh kunci jawaban: semua jawaban benar adalah index 0
+      if (jawab === 0) score++;
+    });
+    
+    const total = soalData.length;
+    const nilai = (score / total) * 100;
+    
+    alert(`✅ Ujian Selesai!\nSkor: ${score}/${total}\nNilai: ${nilai}%`);
+    
+    // Kirim ke Telegram (opsional)
+    // sendToTelegram({ nama: "Peserta", nilai: nilai });
+    
+    // Tampilkan hasil
+    document.getElementById('soalContainer').innerHTML = `
+      <div class="soal-card" style="text-align: center;">
+        <h2>🎉 UJIAN SELESAI 🎉</h2>
+        <p style="font-size: 2rem; margin: 20px;">${nilai}%</p>
+        <p>Skor: ${score}/${total}</p>
+        <p style="margin-top: 20px;">Terima kasih telah mengikuti seleksi MAE!</p>
+      </div>
+    `;
+    document.querySelector('.nav-buttons').style.display = 'none';
+    document.getElementById('submitBtn').style.display = 'none';
+  }
+  
+  // ========== INIT ==========
+  function init() {
+    renderSoal();
+    startTimer();
+    blockDevTools();
+    detectVisibilityChange();
+    detectWindowBlur();
+    
+    document.getElementById('prevBtn').addEventListener('click', prevSoal);
+    document.getElementById('nextBtn').addEventListener('click', nextSoal);
+    document.getElementById('submitBtn').addEventListener('click', submitExam);
+    document.getElementById('closeModalBtn').addEventListener('click', hideWarning);
+  }
+  
+  init();
+</script>
+</body>
+</html>
